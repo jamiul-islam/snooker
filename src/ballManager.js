@@ -77,7 +77,7 @@ function BallManager() {
   const createBall = (x, y, color, value) => {
     let ball = new Ball(x, y, color, value);
     this.balls[color == "red" ? "red" : "color"].push(ball);
-    snookerWorld.add(engine.world, [ball.object]);
+    World.add(engine.world, [ball.object]);
   };
 
   //creates the balls with positions based on the mode
@@ -201,7 +201,7 @@ function BallManager() {
 
   const removeBall = (array, index) => {
     //removes the ball from the world
-    snookerWorld.remove(engine.world, [array[index].object]);
+    World.remove(engine.world, [array[index].object]);
     //removes it from the array
     array.splice(index, 1);
   };

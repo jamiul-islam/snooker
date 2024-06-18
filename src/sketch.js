@@ -1,5 +1,5 @@
 // Engine initialization
-let Engine = Matter.Engine;
+let snookerEngine = Matter.Engine;
 const Render = Matter.Render;
 
 let World = Matter.World;
@@ -13,7 +13,7 @@ let Constraint = Matter.Constraint;
 let Sleeping = Matter.Sleeping;
 
 // variable initialization
-let engine = Engine.create();
+let engine = snookerEngine.create();
 let canvas;
 let gameStart = false;
 
@@ -35,7 +35,7 @@ function setup() {
 
 function draw() {
   background(0);
-  Engine.update(engine);
+  snookerEngine.update(engine);
   //turn off y gravity so balls dont fall
   engine.gravity.y = 0;
   table.draw();
