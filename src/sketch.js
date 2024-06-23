@@ -25,7 +25,7 @@ let gameTable = new Table();
 let cueBall = new CueBall();
 var ballOrganizer = new BallOrganizer();
 var leaderBoard = new LeaderBoard();
-var timer = new Timer();
+var stopwatch = new Stopwatch();
 var sp = new SuperPower();
 var hp = new Helper();
 
@@ -50,7 +50,7 @@ function draw() {
   stroke(255);
   text("SNOOKER ASSIGNMENT", 450, 50);
   pop();
-  timer.drawTimer();
+  stopwatch.drawTimer();
 
   //if they haven't selected a mode, show text to ask them to
   if (!ballOrganizer.mode) {
@@ -78,7 +78,7 @@ function draw() {
     //if the game has started
     else {
       //draw the time
-      timer.startTimer();
+      stopwatch.startTimer();
       push();
       textSize(24);
       //draw the text telling the user
@@ -192,7 +192,7 @@ function mouseReleased() {
 
 //For my extensions I implemented three things, starting from the least original I implemented a scoreboard, with both scoring additions
 // from the balls being pocketed, but also deductions from foul shots, as well as preventing points from being added if a foul occurred.
-// Next, I added a timer that counts down from 10 minutes. If either the timer runs out, or the player clears the gameTable, they can press
+// Next, I added a stopwatch that counts down from 10 minutes. If either the stopwatch runs out, or the player clears the gameTable, they can press
 // ‘r’ to restart. Finally, I also included “superpowers”. This is under its own object with functions that activate, deactivate,
 //and assign their usage through the creation of a button with the p5.js DOM. Some of these powers include, increasing the power of the
 // cue by multiplying its mass, making the balls smaller, doubling the points of each ball, and randomly aligning balls to the front of

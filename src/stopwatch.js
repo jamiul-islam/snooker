@@ -1,4 +1,4 @@
-function Timer() {
+function Stopwatch() {
   let minutes = 10;
   let seconds = 0;
   this.startTimer = () => {
@@ -16,7 +16,7 @@ function Timer() {
       seconds -= 1;
     }
   };
-  //draws the timer
+  //draws the stopwatch
   this.drawTimer = () => {
     push();
     textSize(18);
@@ -25,7 +25,7 @@ function Timer() {
     //adds a "0" before the minutes and seconds if they're less than 10
     if (minutes + seconds != 0) {
       text(
-        `Time: ${minutes < 10 ? "0" + minutes : minutes}:${
+        `Stopwatch: ${minutes < 10 ? "0" + minutes : minutes}:${
           seconds < 10 ? "0" + seconds : seconds
         }`,
         1050,
