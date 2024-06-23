@@ -11,11 +11,11 @@ function SuperPower() {
       activated: false,
       activate: () => {
         //increases the mass by 10x
-        Body.setMass(cue.ball, cue.ball.mass * 10);
+        snookerBody.setMass(cue.ball, cue.ball.mass * 10);
       },
       deactivate: () => {
         //reset the mass back to normal, if mass is smaller than starting mass
-        Body.setMass(
+        snookerBody.setMass(
           cue.ball,
           cue.ball.mass * (cue.ball.mass > 1 ? 1 / 10 : 1)
         );
@@ -29,7 +29,7 @@ function SuperPower() {
         for (type in ballManager.balls) {
           for (ball of ballManager.balls[type]) {
             //makes all balls 33% smaller
-            Body.scale(ball.object, 2 / 3, 2 / 3);
+            snookerBody.scale(ball.object, 2 / 3, 2 / 3);
           }
         }
       },
@@ -38,7 +38,7 @@ function SuperPower() {
           for (ball of ballManager.balls[type]) {
             //resets the area back to normal, if the area is smaller than starting
             if (ball.object.area < 91) {
-              Body.scale(ball.object, 3 / 2, 3 / 2);
+              snookerBody.scale(ball.object, 3 / 2, 3 / 2);
             }
           }
         }
@@ -92,7 +92,10 @@ function SuperPower() {
             //and color respectively
             if (random() > (ball.color == "red" ? 0.7 : 0.5) && counter < 6) {
               let vector = positions[counter];
-              Body.setPosition(ball.object, { x: vector.x, y: vector.y });
+              snookerBody.setPosition(ball.object, {
+                x: vector.x,
+                y: vector.y,
+              });
               counter++;
             }
           }

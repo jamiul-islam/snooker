@@ -1,23 +1,27 @@
+// TODO: rename the variables
+
 // Engine initialization
 let snookerEngine = Matter.Engine;
-const Render = Matter.Render;
+const snookerRender = Matter.Render;
 
-let World = Matter.World;
-let Body = Matter.Body;
-let Bodies = Matter.Bodies;
+let snookerWorld = Matter.World;
+let snookerBody = Matter.Body;
+let snookerBodies = Matter.Bodies;
 
-let Mouse = Matter.Mouse;
-var MouseConstraint = Matter.MouseConstraint;
-let Collision = Matter.Collision;
-let Constraint = Matter.Constraint;
-let Sleeping = Matter.Sleeping;
+// interaction initialization
+let snookerMouse = Matter.Mouse;
+var snookerMouseConstraint = Matter.MouseConstraint;
+let snookerCollision = Matter.Collision;
+let snookerConstraint = Matter.Constraint;
+let snookerSleeping = Matter.Sleeping;
 
 // variable initialization
 let engine = snookerEngine.create();
 let canvas;
 let gameStart = false;
 
-let table = new Table();
+// game instruments initialization
+let gameTable = new Table();
 let cue = new CueBall();
 var ballManager = new BallManager();
 var scoreBoard = new ScoreBoard();
@@ -25,11 +29,12 @@ var timer = new Timer();
 var sp = new SuperPower();
 var hp = new Helper();
 
+// setup function
 function setup() {
   canvas = createCanvas(1300, 800);
   angleMode(DEGREES);
   background(0);
-  table.createCushions();
+  gameTable.createCushions();
   hp.setupMouseInteraction();
 }
 
@@ -38,7 +43,7 @@ function draw() {
   snookerEngine.update(engine);
   //turn off y gravity so balls dont fall
   engine.gravity.y = 0;
-  table.draw();
+  gameTable.draw();
   push();
   textSize(36);
   fill("white");
@@ -89,8 +94,8 @@ function draw() {
       if (cue.inField() && !cue.isConstrained) {
         //draw the foul text
         ballManager.drawFoul();
-        //detect and collision for the table and the balls
-        table.detectCollision(cue.ball);
+        //detect and collision for the gameTable and the balls
+        gameTable.detectCollision(cue.ball);
         ballManager.detectCollision(cue.ball);
         //detect if any of the balls fall
         ballManager.detectFalling();
@@ -110,7 +115,7 @@ function draw() {
         //decrease the score by 4 since its a foul
         scoreBoard.addScore(-4);
         //remove both the ball and the cue
-        World.remove(engine.world, [cue.ball, cue.ballConstraint]);
+        snookerWorld.remove(engine.world, [cue.ball, cue.ballConstraint]);
         //gameStart false so the player can place the cueball anywhere in the D line
         gameStart = false;
       }
@@ -164,24 +169,24 @@ function mouseReleased() {
 // ----------------------------------------COMMENTARY ----------------------------------------------------
 
 //I designed this snooker app with the idea of emulating the aesthetic of the image given in the coursework instructions.
-//I created the table with p5js using their rect and ellipse functions, while making the cushions, and the balls with matter.js
-//using their Bodies function. The cue is not a physical cue as seen in snooker, but instead follows a more slingshot style of release,
+//I created the gameTable with p5js using their rect and ellipse functions, while making the cushions, and the balls with matter.js
+//using their snookerBodies function. The cue is not a physical cue as seen in snooker, but instead follows a more slingshot style of release,
 //this was just another way for me to add uniqueness to my app, however using matter.js, I was able to create collision events only when,
 //the cue ball was released. Furthermore, I also found it more intuitive to have a purely mouse based cue, this means that the placement,
 // loading, and releasing of the cue is based on the state of the mouse. Functionally, this works by creating a constraint in the middle
 //of the cue ball, and removing that constraint when the mouse is released, once the cue ball is no longer moving, create a new constraint
 //at the new position of the cue ball.
 
-//For the game mechanics, I used an object-oriented style of programming with constructor functions for the table,
+//For the game mechanics, I used an object-oriented style of programming with constructor functions for the gameTable,
 //ball, my extension, etc. For the pockets, I detected falling simply by tracking the y position of each ball, as the cushions would
-// stop them from leaving the table at certain heights, and the only way to breach that threshold would be through the p5.js generated
+// stop them from leaving the gameTable at certain heights, and the only way to breach that threshold would be through the p5.js generated
 // pockets that don't collide with the matter.js bodies. In my ballManager object I tracked things such as fouls, the target ball,
 // as well as all the logic for when a ball collides or falls. I also included a function for the cushion where it lights up when making
 // contact with the cue ball.
 
 //For my extensions I implemented three things, starting from the least original I implemented a scoreboard, with both scoring additions
 // from the balls being pocketed, but also deductions from foul shots, as well as preventing points from being added if a foul occurred.
-// Next, I added a timer that counts down from 10 minutes. If either the timer runs out, or the player clears the table, they can press
+// Next, I added a timer that counts down from 10 minutes. If either the timer runs out, or the player clears the gameTable, they can press
 // ‘r’ to restart. Finally, I also included “superpowers”. This is under its own object with functions that activate, deactivate,
 //and assign their usage through the creation of a button with the p5.js DOM. Some of these powers include, increasing the power of the
 // cue by multiplying its mass, making the balls smaller, doubling the points of each ball, and randomly aligning balls to the front of

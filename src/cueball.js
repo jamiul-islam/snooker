@@ -5,18 +5,18 @@ function CueBall() {
 
   //creates the ball object
   this.setUpCueBall = (x, y) => {
-    this.ball = Bodies.circle(x, y, 400 / 72, {
+    this.ball = snookerBodies.circle(x, y, 400 / 72, {
       friction: 0.7,
       restitution: 0.95,
     });
 
-    Body.setMass(this.ball, (this.ball.mass *= 2));
-    World.add(engine.world, [this.ball]);
+    snookerBody.setMass(this.ball, (this.ball.mass *= 2));
+    snookerWorld.add(engine.world, [this.ball]);
   };
 
   //creates the constraint
   this.setUpConstraint = (x, y) => {
-    this.ballConstraint = Constraint.create({
+    this.ballConstraint = snookerConstraint.create({
       pointA: { x: x, y: y },
       bodyB: this.ball,
       stiffness: 0.01,
@@ -27,13 +27,13 @@ function CueBall() {
 
     //enables clicking when constraint is recreated
     document.getElementsByTagName("BODY")[0].style["pointer-events"] = "auto";
-    World.add(engine.world, [this.ballConstraint]);
+    snookerWorld.add(engine.world, [this.ballConstraint]);
   };
 
   //removes the constraint when ball is released
   this.removeConstraint = (constraint) => {
     setTimeout(() => {
-      Body.setVelocity(this.ball, {
+      snookerBody.setVelocity(this.ball, {
         x: limitVelocity(this.ball.velocity.x),
         y: limitVelocity(this.ball.velocity.y),
       });
@@ -41,7 +41,7 @@ function CueBall() {
       constraint.bodyB = null;
       constraint.pointA = { x: 0, y: 0 };
       this.isConstrained = false;
-      World.remove(engine.world, [constraint]);
+      snookerWorld.remove(engine.world, [constraint]);
     }, 100);
 
     //disables clicking of any kind when there is no constraint

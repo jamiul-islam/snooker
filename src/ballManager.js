@@ -77,7 +77,7 @@ function BallManager() {
   const createBall = (x, y, color, value) => {
     let ball = new Ball(x, y, color, value);
     this.balls[color == "red" ? "red" : "color"].push(ball);
-    World.add(engine.world, [ball.object]);
+    snookerWorld.add(engine.world, [ball.object]);
   };
 
   //creates the balls with positions based on the mode
@@ -101,7 +101,7 @@ function BallManager() {
         for (let i = 0; i < 15; i++) {
           //randomly place the red balls
           createBall(random(249, 949), random(149, 399), "red", 1);
-          Sleeping.set(this.balls["red"][i]["object"], false);
+          snookerSleeping.set(this.balls["red"][i]["object"], false);
         }
         for (var i = 0; i < Object.keys(this.coloredBalls).length; i++) {
           let color = Object.keys(this.coloredBalls)[i];
@@ -112,14 +112,14 @@ function BallManager() {
             color,
             this.coloredBalls[color]["value"]
           );
-          Sleeping.set(this.balls["color"][i]["object"], false);
+          snookerSleeping.set(this.balls["color"][i]["object"], false);
         }
         break;
       case "partial":
         for (let i = 0; i < 15; i++) {
           createBall(random(249, 949), random(149, 399), "red", 1);
           //set red balls awake so they dont overlap
-          Sleeping.set(this.balls["red"][i]["object"], false);
+          snookerSleeping.set(this.balls["red"][i]["object"], false);
         }
         for (var i = 0; i < Object.keys(this.coloredBalls).length; i++) {
           let color = Object.keys(this.coloredBalls)[i];
@@ -137,7 +137,7 @@ function BallManager() {
   this.setBallsSleep = (asleep) => {
     for (type in this.balls) {
       for (ball of this.balls[type]) {
-        Sleeping.set(ball.object, asleep);
+        snookerSleeping.set(ball.object, asleep);
       }
     }
   };
@@ -201,7 +201,7 @@ function BallManager() {
 
   const removeBall = (array, index) => {
     //removes the ball from the world
-    World.remove(engine.world, [array[index].object]);
+    snookerWorld.remove(engine.world, [array[index].object]);
     //removes it from the array
     array.splice(index, 1);
   };
@@ -210,7 +210,7 @@ function BallManager() {
   this.detectCollision = (cue) => {
     for (balltype in this.balls) {
       for (ball of this.balls[balltype]) {
-        if (Collision.collides(cue, ball.object)) {
+        if (snookerCollision.collides(cue, ball.object)) {
           if (ball.color == "red") {
             redBallCollided();
           } else {

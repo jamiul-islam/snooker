@@ -9,15 +9,15 @@ function Helper() {
 
   this.setupMouseInteraction = () => {
     //sets up the mouse interaction with the cue ball
-    const mouse = Mouse.create(canvas.elt);
+    const mouse = snookerMouse.create(canvas.elt);
     const mouseParams = {
       mouse: mouse,
       constraint: { stiffness: 0.05 },
     };
-    mouseConstraint = MouseConstraint.create(engine, mouseParams);
+    mouseConstraint = snookerMouseConstraint.create(engine, mouseParams);
     //disables mouse interaction with the other balls
     mouseConstraint.mouse.pixelRatio = pixelDensity();
     mouseConstraint.collisionFilter.mask = 0x0001;
-    World.add(engine.world, mouseConstraint);
+    snookerWorld.add(engine.world, mouseConstraint);
   };
 }
