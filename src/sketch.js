@@ -23,7 +23,7 @@ let gameStart = false;
 // game instruments initialization
 let gameTable = new Table();
 let cueBall = new CueBall();
-var ballManager = new BallManager();
+var ballOrganizer = new BallOrganizer();
 var scoreBoard = new ScoreBoard();
 var timer = new Timer();
 var sp = new SuperPower();
@@ -53,7 +53,7 @@ function draw() {
   timer.drawTimer();
 
   //if they haven't selected a mode, show text to ask them to
-  if (!ballManager.mode) {
+  if (!ballOrganizer.mode) {
     push();
     textSize(24);
     fill("white");
@@ -67,8 +67,8 @@ function draw() {
   //if they have draw the balls and check if the game has started
   else {
     textSize(14);
-    text("mode: " + ballManager.mode, 25, 100);
-    ballManager.drawBalls();
+    text("mode: " + ballOrganizer.mode, 25, 100);
+    ballOrganizer.drawBalls();
     scoreBoard.showScore();
     if (!gameStart) {
       textSize(24);
@@ -89,18 +89,18 @@ function draw() {
       //draw the cue
       cueBall.draw();
       //draw the target to hit
-      ballManager.showTarget();
+      ballOrganizer.showTarget();
       //if the cue is no longer constrained but still in the field
       if (cueBall.inField() && !cueBall.isConstrained) {
         //draw the foul text
-        ballManager.drawFoul();
+        ballOrganizer.drawFoul();
         //detect and collision for the gameTable and the balls
         gameTable.detectCollision(cueBall.ball);
-        ballManager.detectCollision(cueBall.ball);
+        ballOrganizer.detectCollision(cueBall.ball);
         //detect if any of the balls fall
-        ballManager.detectFalling();
+        ballOrganizer.detectFalling();
         //check possible win conditions
-        ballManager.checkWin();
+        ballOrganizer.checkWin();
         //if the cueball is not moving
         if (cueBall.notMoving()) {
           //set up the constraint
@@ -109,7 +109,7 @@ function draw() {
             cueBall.ball.position.y
           );
           //reset all the ball properties
-          ballManager.newTurn();
+          ballOrganizer.newTurn();
           //deactivate any activated superpowers
           sp.deactivate();
         }
@@ -131,16 +131,16 @@ function draw() {
 
 function keyTyped() {
   //if the game hasn't started yet then the player can change the mode
-  if (!gameStart && !ballManager.mode) {
+  if (!gameStart && !ballOrganizer.mode) {
     //used to lowercase to allow both upper and lower case
     if (key.toLowerCase() === "u") {
-      ballManager.setMode("unordered");
+      ballOrganizer.setMode("unordered");
     }
     if (key.toLowerCase() === "p") {
-      ballManager.setMode("partial");
+      ballOrganizer.setMode("partial");
     }
     if (key.toLowerCase() === "o") {
-      ballManager.setMode("ordered");
+      ballOrganizer.setMode("ordered");
     }
   }
 
@@ -153,7 +153,7 @@ function keyTyped() {
 
 function mouseReleased() {
   //if the game hasn't started but a mode has been selected, the user can place a whiteball
-  if (!gameStart && ballManager.mode) {
+  if (!gameStart && ballOrganizer.mode) {
     //defines the Dline area that the cue can be placed
     if (dist(mouseX, mouseY, 350, 175 + 370 / 3) < 75 && mouseX < 350) {
       //starts the game
@@ -161,14 +161,14 @@ function mouseReleased() {
       //draws the cue and the constraint based on the mouse position
       cueBall.setUpCueBall(mouseX, mouseY);
       cueBall.setUpConstraint(mouseX, mouseY);
-      ballManager.setBallsSleep(true);
+      ballOrganizer.setBallsSleep(true);
       sp.placeButtons();
     }
   } else if (gameStart) {
     //if the game has started and the mode has been selected then remove the constraint
     cueBall.removeConstraint(cueBall.ballConstraint);
     //make the balls awake so they can move around
-    ballManager.setBallsSleep(false);
+    ballOrganizer.setBallsSleep(false);
   }
 }
 
@@ -186,7 +186,7 @@ function mouseReleased() {
 //For the game mechanics, I used an object-oriented style of programming with constructor functions for the gameTable,
 //ball, my extension, etc. For the pockets, I detected falling simply by tracking the y position of each ball, as the cushions would
 // stop them from leaving the gameTable at certain heights, and the only way to breach that threshold would be through the p5.js generated
-// pockets that don't collide with the matter.js bodies. In my ballManager object I tracked things such as fouls, the target ball,
+// pockets that don't collide with the matter.js bodies. In my ballOrganizer object I tracked things such as fouls, the target ball,
 // as well as all the logic for when a ball collides or falls. I also included a function for the cushion where it lights up when making
 // contact with the cue ball.
 

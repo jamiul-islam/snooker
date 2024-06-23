@@ -1,4 +1,4 @@
-function BallManager() {
+function BallOrganizer() {
   this.balls = {
     red: [],
     color: [],
