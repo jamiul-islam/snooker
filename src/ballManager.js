@@ -207,10 +207,10 @@ function BallManager() {
   };
 
   //detects collision between the white ball and the red or colored
-  this.detectCollision = (cue) => {
+  this.detectCollision = (cueBall) => {
     for (balltype in this.balls) {
       for (ball of this.balls[balltype]) {
-        if (snookerCollision.collides(cue, ball.object)) {
+        if (snookerCollision.collides(cueBall, ball.object)) {
           if (ball.color == "red") {
             redBallCollided();
           } else {

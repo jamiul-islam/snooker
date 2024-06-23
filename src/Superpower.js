@@ -11,13 +11,13 @@ function SuperPower() {
       activated: false,
       activate: () => {
         //increases the mass by 10x
-        snookerBody.setMass(cue.ball, cue.ball.mass * 10);
+        snookerBody.setMass(cueBall.ball, cueBall.ball.mass * 10);
       },
       deactivate: () => {
         //reset the mass back to normal, if mass is smaller than starting mass
         snookerBody.setMass(
-          cue.ball,
-          cue.ball.mass * (cue.ball.mass > 1 ? 1 / 10 : 1)
+          cueBall.ball,
+          cueBall.ball.mass * (cueBall.ball.mass > 1 ? 1 / 10 : 1)
         );
       },
     },

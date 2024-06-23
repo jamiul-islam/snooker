@@ -100,6 +100,6 @@ function CueBall() {
 
   //check whether the cue ball is in field, returns boolean
   this.inField = () => {
-    return cue.ball.position.y >= 106 && cue.ball.position.y <= 494;
+    return cueBall.ball.position.y >= 106 && cueBall.ball.position.y <= 494;
   };
 }

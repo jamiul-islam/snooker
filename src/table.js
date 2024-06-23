@@ -160,10 +160,10 @@ function Table() {
     arc(200 + tableWidth / 5, 175 + 370 / 3, 150, 150, 90, 270);
   };
 
-  this.detectCollision = (cue) => {
+  this.detectCollision = (cueBall) => {
     //changes the render of the cushion when colliding with the cue ball
     for (cushion of cushions) {
-      if (snookerCollision.collides(cue, cushion)) {
+      if (snookerCollision.collides(cueBall, cushion)) {
         cushion.render.visible = false;
       } else {
         cushion.render.visible = true;

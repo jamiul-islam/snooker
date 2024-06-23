@@ -22,7 +22,7 @@ let gameStart = false;
 
 // game instruments initialization
 let gameTable = new Table();
-let cue = new CueBall();
+let cueBall = new CueBall();
 var ballManager = new BallManager();
 var scoreBoard = new ScoreBoard();
 var timer = new Timer();
@@ -87,35 +87,41 @@ function draw() {
       text("press r to restart the game", 200, 600);
       pop();
       //draw the cue
-      cue.draw();
+      cueBall.draw();
       //draw the target to hit
       ballManager.showTarget();
       //if the cue is no longer constrained but still in the field
-      if (cue.inField() && !cue.isConstrained) {
+      if (cueBall.inField() && !cueBall.isConstrained) {
         //draw the foul text
         ballManager.drawFoul();
         //detect and collision for the gameTable and the balls
-        gameTable.detectCollision(cue.ball);
-        ballManager.detectCollision(cue.ball);
+        gameTable.detectCollision(cueBall.ball);
+        ballManager.detectCollision(cueBall.ball);
         //detect if any of the balls fall
         ballManager.detectFalling();
         //check possible win conditions
         ballManager.checkWin();
         //if the cueball is not moving
-        if (cue.notMoving()) {
+        if (cueBall.notMoving()) {
           //set up the constraint
-          cue.setUpConstraint(cue.ball.position.x, cue.ball.position.y);
+          cueBall.setUpConstraint(
+            cueBall.ball.position.x,
+            cueBall.ball.position.y
+          );
           //reset all the ball properties
           ballManager.newTurn();
           //deactivate any activated superpowers
           sp.deactivate();
         }
         //if the cue is not in field and its moving ie. not constrained
-      } else if (!cue.isConstrained) {
+      } else if (!cueBall.isConstrained) {
         //decrease the score by 4 since its a foul
         scoreBoard.addScore(-4);
         //remove both the ball and the cue
-        snookerWorld.remove(engine.world, [cue.ball, cue.ballConstraint]);
+        snookerWorld.remove(engine.world, [
+          cueBall.ball,
+          cueBall.ballConstraint,
+        ]);
         //gameStart false so the player can place the cueball anywhere in the D line
         gameStart = false;
       }
@@ -153,14 +159,14 @@ function mouseReleased() {
       //starts the game
       gameStart = true;
       //draws the cue and the constraint based on the mouse position
-      cue.setUpCueBall(mouseX, mouseY);
-      cue.setUpConstraint(mouseX, mouseY);
+      cueBall.setUpCueBall(mouseX, mouseY);
+      cueBall.setUpConstraint(mouseX, mouseY);
       ballManager.setBallsSleep(true);
       sp.placeButtons();
     }
   } else if (gameStart) {
     //if the game has started and the mode has been selected then remove the constraint
-    cue.removeConstraint(cue.ballConstraint);
+    cueBall.removeConstraint(cueBall.ballConstraint);
     //make the balls awake so they can move around
     ballManager.setBallsSleep(false);
   }
