@@ -1,4 +1,4 @@
-function ScoreBoard() {
+function LeaderBoard() {
   let score = 0;
   //adds the score
   this.addScore = (s) => {

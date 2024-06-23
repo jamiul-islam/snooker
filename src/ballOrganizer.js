@@ -193,7 +193,7 @@ function BallOrganizer() {
             this.redBallIn = false;
           }
           //adds the value of the ball pocketed if there is no foul
-          scoreBoard.addScore(this.foul ? 0 : ball.value);
+          leaderBoard.addScore(this.foul ? 0 : ball.value);
         }
       }
     }
@@ -239,7 +239,7 @@ function BallOrganizer() {
     if ((this.redBallIn || ballCollided == "color") && !this.foul) {
       this.foul = true;
       this.foulMessage = "Red ball Hit";
-      scoreBoard.addScore(-4);
+      leaderBoard.addScore(-4);
     }
     this.redBallIn = false;
     ballCollided = "red";
@@ -251,7 +251,7 @@ function BallOrganizer() {
     if (!this.redBallIn && this.balls.red.length != 0 && !this.foul) {
       this.foul = true;
       this.foulMessage = "Coloured ball Hit";
-      scoreBoard.addScore(-4);
+      leaderBoard.addScore(-4);
     }
     this.redBallIn = false;
     ballCollided = "color";

@@ -24,7 +24,7 @@ let gameStart = false;
 let gameTable = new Table();
 let cueBall = new CueBall();
 var ballOrganizer = new BallOrganizer();
-var scoreBoard = new ScoreBoard();
+var leaderBoard = new LeaderBoard();
 var timer = new Timer();
 var sp = new SuperPower();
 var hp = new Helper();
@@ -69,7 +69,7 @@ function draw() {
     textSize(14);
     text("mode: " + ballOrganizer.mode, 25, 100);
     ballOrganizer.drawBalls();
-    scoreBoard.showScore();
+    leaderBoard.showScore();
     if (!gameStart) {
       textSize(24);
       stroke(255);
@@ -116,7 +116,7 @@ function draw() {
         //if the cue is not in field and its moving ie. not constrained
       } else if (!cueBall.isConstrained) {
         //decrease the score by 4 since its a foul
-        scoreBoard.addScore(-4);
+        leaderBoard.addScore(-4);
         //remove both the ball and the cue
         snookerWorld.remove(engine.world, [
           cueBall.ball,
