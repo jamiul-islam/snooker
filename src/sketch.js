@@ -32,7 +32,7 @@ function setup() {
   angleMode(DEGREES); // Setting angle mode to degrees
   background(0); // Setting background color to black
   gameTable.createCushions(); // Creating the table cushions
-  helperFunc.setupMouseInteraction(); // Setting up mouse interaction
+  helperFunc.snookerMouseInteraction(); // Setting up mouse interaction
 }
 
 // p5.js draw function, runs continuously

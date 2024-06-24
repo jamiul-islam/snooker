@@ -177,7 +177,7 @@ function Table() {
       noStroke();
       //changes the fill between dark n light green, depending on render visibility
       fill(cushion.render.visible ? "#346219" : "#69F319");
-      helperFunc.drawVertices(cushion.vertices);
+      helperFunc.drawShapes(cushion.vertices);
       pop();
     }
   };

@@ -171,7 +171,7 @@ function BallOrganizer() {
         push();
         fill(ball.color);
         noStroke();
-        helperFunc.drawVertices(ball.object.vertices);
+        helperFunc.drawShapes(ball.object.vertices);
         pop();
       }
     }
