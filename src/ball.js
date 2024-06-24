@@ -1,12 +1,17 @@
-//returns an object with the matter js body, the ball's color, and the value
+/**
+ * @param {*} x: x-coordinate of the ball
+ * @param {*} y: y-coordinate of the ball
+ * @param {*} color: color of the ball
+ * @param {*} value: value of the ball
+ * @returns an object with the matter js body, the ball's color, and the value
+ */
 function Ball(x, y, color, value) {
   return {
     object: snookerBodies.circle(x, y, 400 / 72, {
       isSleeping: true,
-      //disables mouse interaction with the red and colored balls
-      collisionFilter: { category: 0x0002 },
-      restitution: 0.9,
-      friction: 0.7,
+      collisionFilter: { category: 0x0002 }, // disable mouse interaction with red balls
+      restitution: 0.85,
+      friction: 0.65,
     }),
     color: color,
     value: value,
