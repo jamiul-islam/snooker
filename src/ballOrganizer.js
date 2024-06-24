@@ -149,7 +149,7 @@ function BallOrganizer() {
         push();
         fill(ball.color);
         noStroke();
-        hp.drawVertices(ball.object.vertices);
+        helperFunc.drawVertices(ball.object.vertices);
         pop();
       }
     }

@@ -1,4 +1,4 @@
-function SuperPower() {
+function ExtraFeature() {
   //list of powers already used
   let powersUsed = [];
   //list of buttons

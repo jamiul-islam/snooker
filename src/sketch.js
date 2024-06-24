@@ -1,59 +1,64 @@
-// TODO: rename the variables
-
-// Engine initialization
+// Importing Matter.js engine modules for physics simulation
 let snookerEngine = Matter.Engine;
 const snookerRender = Matter.Render;
-
 let snookerWorld = Matter.World;
 let snookerBody = Matter.Body;
 let snookerBodies = Matter.Bodies;
 
-// interaction initialization
+// Importing Matter.js modules for interactions and constraints
 let snookerMouse = Matter.Mouse;
 var snookerMouseConstraint = Matter.MouseConstraint;
 let snookerCollision = Matter.Collision;
 let snookerConstraint = Matter.Constraint;
 let snookerSleeping = Matter.Sleeping;
 
-// variable initialization
+// Variable initialization for engine and game state
 let engine = snookerEngine.create();
 let canvas;
-let gameStart = false;
+let gameStart = false; // Flag to track if the game has started
 
-// game instruments initialization
+// Initializing game components
 let gameTable = new Table();
 let cueBall = new CueBall();
 var ballOrganizer = new BallOrganizer();
 var leaderBoard = new LeaderBoard();
 var stopwatch = new Stopwatch();
-var sp = new SuperPower();
-var hp = new Helper();
+var feature = new ExtraFeature();
+var helperFunc = new Helper();
 
-// setup function
+// p5.js setup function, runs once at the start
 function setup() {
-  canvas = createCanvas(1300, 800);
-  angleMode(DEGREES);
-  background(0);
-  gameTable.createCushions();
-  hp.setupMouseInteraction();
+  canvas = createCanvas(1300, 800); // Creating the game canvas
+  angleMode(DEGREES); // Setting angle mode to degrees
+  background(0); // Setting background color to black
+  gameTable.createCushions(); // Creating the table cushions
+  helperFunc.setupMouseInteraction(); // Setting up mouse interaction
 }
 
+// p5.js draw function, runs continuously
 function draw() {
-  background(0);
-  snookerEngine.update(engine);
-  //turn off y gravity so balls dont fall
+  background(0); // Clearing the canvas
+  snookerEngine.update(engine); // Updating the physics engine
+
+  // Set gravity to 0 to keep balls within the table
   engine.gravity.y = 0;
-  gameTable.draw();
+
+  gameTable.draw(); // Drawing the game table
+
+  // Drawing the title of the game
   push();
   textSize(36);
   fill("white");
   stroke(255);
   text("SNOOKER ASSIGNMENT", 450, 50);
   pop();
+
+  // Drawing the stopwatch timer
   stopwatch.drawTimer();
 
-  //if they haven't selected a mode, show text to ask them to
+  // Checking if ball arrangement mode is selected
   if (!ballOrganizer.mode) {
+    // Instructions to select ball arrangement mode
     push();
     textSize(24);
     fill("white");
@@ -63,76 +68,65 @@ function draw() {
       600
     );
     pop();
-  }
-  //if they have draw the balls and check if the game has started
-  else {
+  } else {
+    // Displaying the selected mode and starting the game if mode is selected
     textSize(14);
     text("mode: " + ballOrganizer.mode, 25, 100);
-    ballOrganizer.drawBalls();
-    leaderBoard.showScore();
+    ballOrganizer.drawBalls(); // Drawing the balls on the table
+    leaderBoard.showScore(); // Displaying the leaderboard
+
     if (!gameStart) {
+      // Instructions to place the white ball if game hasn't started
       textSize(24);
       stroke(255);
-      text("Click anywhere on the D line to place the white ball", 200, 600);
-    }
-    //if the game has started
-    else {
-      //draw the time
-      stopwatch.startTimer();
+      text("Please click inside the D line to place the white ball", 200, 600);
+    } else {
+      // Game has started, showing additional instructions
+      stopwatch.startTimer(); // Starting the stopwatch
+
       push();
       textSize(24);
-      //draw the text telling the user
-      //they can restart the game
       fill("white");
       text("press r to restart the game", 200, 600);
       pop();
-      //draw the cue
-      cueBall.draw();
-      //draw the target to hit
-      ballOrganizer.showTarget();
-      //if the cue is no longer constrained but still in the field
+
+      cueBall.draw(); // Drawing the cue ball
+      ballOrganizer.showTarget(); // Showing the target for the cue ball
+
+      // Handling game logic if the cue ball is in the field and not constrained
       if (cueBall.inField() && !cueBall.isConstrained) {
-        //draw the foul text
-        ballOrganizer.drawFoul();
-        //detect and collision for the gameTable and the balls
-        gameTable.detectCollision(cueBall.ball);
-        ballOrganizer.detectCollision(cueBall.ball);
-        //detect if any of the balls fall
-        ballOrganizer.detectFalling();
-        //check possible win conditions
-        ballOrganizer.checkWin();
-        //if the cueball is not moving
+        ballOrganizer.drawFoul(); // Drawing foul messages
+        gameTable.detectCollision(cueBall.ball); // Detecting collisions with the table
+        ballOrganizer.detectCollision(cueBall.ball); // Detecting collisions with other balls
+        ballOrganizer.detectFalling(); // Detecting if any ball falls into a pocket
+        ballOrganizer.checkWin(); // Checking if the player has won
+
         if (cueBall.notMoving()) {
-          //set up the constraint
+          // Setting up the cue ball constraint if it is not moving
           cueBall.setUpConstraint(
             cueBall.ball.position.x,
             cueBall.ball.position.y
           );
-          //reset all the ball properties
-          ballOrganizer.newTurn();
-          //deactivate any activated superpowers
-          sp.deactivate();
+          ballOrganizer.newTurn(); // Starting a new turn
+          feature.deactivate(); // Deactivating any extra features
         }
-        //if the cue is not in field and its moving ie. not constrained
       } else if (!cueBall.isConstrained) {
-        //decrease the score by 4 since its a foul
-        leaderBoard.addScore(-4);
-        //remove both the ball and the cue
+        // Handling fouls when cue ball is constrained and moving
+        leaderBoard.addScore(-4); // Decreasing the score by 4 for a foul
         snookerWorld.remove(engine.world, [
           cueBall.ball,
           cueBall.ballConstraint,
-        ]);
-        //gameStart false so the player can place the cueball anywhere in the D line
-        gameStart = false;
+        ]); // Removing the ball and its constraint
+        gameStart = false; // Allowing the player to place the cue ball again
       }
     }
   }
 }
 
+// Function to handle key presses
 function keyTyped() {
-  //if the game hasn't started yet then the player can change the mode
   if (!gameStart && !ballOrganizer.mode) {
-    //used to lowercase to allow both upper and lower case
+    // Setting ball arrangement mode based on key press
     if (key.toLowerCase() === "u") {
       ballOrganizer.setMode("unordered");
     }
@@ -144,31 +138,27 @@ function keyTyped() {
     }
   }
 
-  //at any time the user can press r to restart the game by
-  //reloading the window
+  // Restarting the game if 'r' is pressed
   if (key.toLowerCase() === "r") {
-    window.location.reload();
+    window.location.reload(); // Reloading the window to restart
   }
 }
 
+// Function to handle mouse release events
 function mouseReleased() {
-  //if the game hasn't started but a mode has been selected, the user can place a whiteball
   if (!gameStart && ballOrganizer.mode) {
-    //defines the Dline area that the cue can be placed
+    // Allowing the player to place the cue ball within the D line before the game starts
     if (dist(mouseX, mouseY, 350, 175 + 370 / 3) < 75 && mouseX < 350) {
-      //starts the game
       gameStart = true;
-      //draws the cue and the constraint based on the mouse position
-      cueBall.setUpCueBall(mouseX, mouseY);
-      cueBall.setUpConstraint(mouseX, mouseY);
-      ballOrganizer.setBallsSleep(true);
-      sp.placeButtons();
+      cueBall.setUpCueBall(mouseX, mouseY); // Setting up the cue ball at mouse position
+      cueBall.setUpConstraint(mouseX, mouseY); // Setting up the cue ball constraint
+      ballOrganizer.setBallsSleep(true); // Putting all balls to sleep
+      feature.placeButtons(); // Placing additional feature buttons
     }
   } else if (gameStart) {
-    //if the game has started and the mode has been selected then remove the constraint
+    // Removing the constraint if the game is in progress
     cueBall.removeConstraint(cueBall.ballConstraint);
-    //make the balls awake so they can move around
-    ballOrganizer.setBallsSleep(false);
+    ballOrganizer.setBallsSleep(false); // Waking up all balls
   }
 }
 
