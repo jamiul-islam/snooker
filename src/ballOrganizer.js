@@ -138,7 +138,7 @@ function BallOrganizer() {
         }
         break;
 
-      // Create red balls randomly positioned
+      // Create all balls randomly positioned
       case "partial":
         for (let i = 0; i < 15; i++) {
           createBall(random(249, 949), random(149, 399), "red", 1);

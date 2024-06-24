@@ -87,7 +87,7 @@ function draw() {
     textSize(24);
     fill("white");
     text(
-      "Press for Ball Placement: o 👉 ordered, u 👉 unordered, p 👉 partially ordered",
+      "Press for Ball Placement: 1 👉 ordered, 2 👉 unordered, 3 👉 partially ordered",
       200,
       600
     );
@@ -151,15 +151,15 @@ function draw() {
 function keyTyped() {
   if (!gameStart && !ballOrganizer.mode) {
     // Setting ball arrangement mode based on key press
-    if (key.toLowerCase() === "u") {
-      ballOrganizer.setMode("unordered");
-    }
-    if (key.toLowerCase() === "p") {
-      ballOrganizer.setMode("partial");
-    }
-    if (key.toLowerCase() === "o") {
-      ballOrganizer.setMode("ordered");
-    }
+  }
+  if (key.toLowerCase() === "1") {
+    ballOrganizer.setMode("ordered");
+  }
+  if (key.toLowerCase() === "2") {
+    ballOrganizer.setMode("unordered");
+  }
+  if (key.toLowerCase() === "3") {
+    ballOrganizer.setMode("partial");
   }
 
   // Restarting the game if 'r' is pressed
