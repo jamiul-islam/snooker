@@ -1,3 +1,27 @@
+/**
+ * ------------------------COMMENTARY------------------------
+ * This snooker application is designed with a unique blend of professional gameplay mechanics and arcade-style features.
+ * The game table is visually rendered using p5.js, while the physical interactions of the balls and cushions are handled by Matter.js, ensuring realistic physics.
+ *
+ * The cue ball movement utilizes a slingshot-style mechanism, enhancing the user experience.
+ * This is achieved by creating and removing constraints on the cue ball based on mouse interactions, allowing for intuitive control.
+ *
+ * Object-oriented programming, factory pattern principles are applied throughout the codebase, with constructor functions and classes managing various aspects of the game.
+ * The Ball constructor function creates individual ball objects with specific properties, while the BallOrganizer constructor function manages the arrangement and organization of balls on the table.
+ *
+ * The CueBall constructor function is responsible for the creation and management of the cue ball, including setting constraints for movement and handling interactions.
+ * The ExtraFeature constructor function introduces additional gameplay elements, such as increasing the cue ball's mass, shrinking ball sizes, and tripling the points of each ball, adding an arcade-like twist to the game.
+ *
+ * The Table constructor function encapsulates the snooker table's components, including the generation and detection of impacts between the cue ball and cushions.
+ * The helper functions manage various utility tasks, such as drawing shapes and handling mouse interactions.
+ *
+ * A scoreboard system tracks the player's score, accounting for both successful shots and fouls.
+ * A stopwatch adds a time-based challenge, counting down from 10 minutes and allowing players to restart the game upon completion or timeout.
+ *
+ * Overall, this snooker application offers a unique and engaging experience by combining realistic physics and professional gameplay with creative, arcade-inspired features.
+ * The result is a dynamic and entertaining game that stands out from traditional snooker simulations.
+ */
+
 // Importing Matter.js engine modules for physics simulation
 let snookerEngine = Matter.Engine;
 const snookerRender = Matter.Render;
@@ -161,32 +185,3 @@ function mouseReleased() {
     ballOrganizer.ballsSleep(false); // Waking up all balls
   }
 }
-
-// ----------------------------------------COMMENTARY ----------------------------------------------------
-
-//I designed this snooker app with the idea of emulating the aesthetic of the image given in the coursework instructions.
-//I created the gameTable with p5js using their rect and ellipse functions, while making the cushions, and the balls with matter.js
-//using their snookerBodies function. The cue is not a physical cue as seen in snooker, but instead follows a more slingshot style of release,
-//this was just another way for me to add uniqueness to my app, however using matter.js, I was able to create collision events only when,
-//the cue ball was released. Furthermore, I also found it more intuitive to have a purely mouse based cue, this means that the placement,
-// loading, and releasing of the cue is based on the state of the mouse. Functionally, this works by creating a constraint in the middle
-//of the cue ball, and removing that constraint when the mouse is released, once the cue ball is no longer moving, create a new constraint
-//at the new position of the cue ball.
-
-//For the game mechanics, I used an object-oriented style of programming with constructor functions for the gameTable,
-//ball, my extension, etc. For the pockets, I detected falling simply by tracking the y position of each ball, as the cushions would
-// stop them from leaving the gameTable at certain heights, and the only way to breach that threshold would be through the p5.js generated
-// pockets that don't collide with the matter.js bodies. In my ballOrganizer object I tracked things such as fouls, the target ball,
-// as well as all the logic for when a ball collides or falls. I also included a function for the cushion where it lights up when making
-// contact with the cue ball.
-
-//For my extensions I implemented three things, starting from the least original I implemented a scoreboard, with both scoring additions
-// from the balls being pocketed, but also deductions from foul shots, as well as preventing points from being added if a foul occurred.
-// Next, I added a stopwatch that counts down from 10 minutes. If either the stopwatch runs out, or the player clears the gameTable, they can press
-// ‘r’ to restart. Finally, I also included “superpowers”. This is under its own object with functions that activate, deactivate,
-//and assign their usage through the creation of a button with the p5.js DOM. Some of these features include, increasing the feature of the
-// cue by multiplying its mass, making the balls smaller, doubling the points of each ball, and randomly aligning balls to the front of
-// each pocket. These features were my way of giving an arcade feel to an otherwise very professional and technical game. I believe this
-//to be unique and “has not been seen in snooker gaming before”, as it is a manipulation of the game’s physics and rules in a way unable
-// to be done in real life, and not appropriate for snooker applications which are usually attempting to
-//recreate the reality of the game.
