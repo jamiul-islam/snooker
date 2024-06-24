@@ -1,8 +1,3 @@
-/**
- * TODO: cueBall.js
- * TODO: extraFeature.js
- */
-
 // Importing Matter.js engine modules for physics simulation
 let snookerEngine = Matter.Engine;
 const snookerRender = Matter.Render;
