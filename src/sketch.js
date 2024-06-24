@@ -99,28 +99,28 @@ function draw() {
       ballOrganizer.showTarget(); // Showing the target for the cue ball
 
       // Handling game logic if the cue ball is in the field and not constrained
-      if (cueBall.inField() && !cueBall.isConstrained) {
+      if (cueBall.isInsideField() && !cueBall.ballConst) {
         ballOrganizer.drawFoul(); // Drawing foul messages
         gameTable.detectImpact(cueBall.ball); // Detecting collisions with the table
         ballOrganizer.detectImpact(cueBall.ball); // Detecting collisions with other balls
         ballOrganizer.detectFalling(); // Detecting if any ball falls into a pocket
         ballOrganizer.checkWin(); // Checking if the player has won
 
-        if (cueBall.notMoving()) {
+        if (cueBall.ballStatic()) {
           // Setting up the cue ball constraint if it is not moving
-          cueBall.setUpConstraint(
+          cueBall.setConstraints(
             cueBall.ball.position.x,
             cueBall.ball.position.y
           );
           ballOrganizer.newTurn(); // Starting a new turn
           feature.deactivate(); // Deactivating any extra features
         }
-      } else if (!cueBall.isConstrained) {
+      } else if (!cueBall.ballConst) {
         // Handling fouls when cue ball is constrained and moving
         leaderBoard.addScore(-4); // Decreasing the score by 4 for a foul
         snookerWorld.remove(engine.world, [
           cueBall.ball,
-          cueBall.ballConstraint,
+          cueBall.cueBallConstraint,
         ]); // Removing the ball and its constraint
         gameStart = false; // Allowing the player to place the cue ball again
       }
@@ -155,14 +155,14 @@ function mouseReleased() {
     // Allowing the player to place the cue ball within the D line before the game starts
     if (dist(mouseX, mouseY, 350, 175 + 370 / 3) < 75 && mouseX < 350) {
       gameStart = true;
-      cueBall.setUpCueBall(mouseX, mouseY); // Setting up the cue ball at mouse position
-      cueBall.setUpConstraint(mouseX, mouseY); // Setting up the cue ball constraint
+      cueBall.cueBallInit(mouseX, mouseY); // Setting up the cue ball at mouse position
+      cueBall.setConstraints(mouseX, mouseY); // Setting up the cue ball constraint
       ballOrganizer.ballsSleep(true); // Putting all balls to sleep
       feature.placeButtons(); // Placing additional feature buttons
     }
   } else if (gameStart) {
     // Removing the constraint if the game is in progress
-    cueBall.removeConstraint(cueBall.ballConstraint);
+    cueBall.removeConstraint(cueBall.cueBallConstraint);
     ballOrganizer.ballsSleep(false); // Waking up all balls
   }
 }
