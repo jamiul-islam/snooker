@@ -1,20 +1,27 @@
+/**
+ * ExtraFeature class to handle the activation and deactivation of extra features
+ * @method features: Object to store the features, including their names, activation, and deactivation functions
+ * @method placeButtons: Function to place the feature buttons on the screen
+ * @method deactivate: Function to deactivate all activated features
+ * @method makeFeatureButtons: Function to create a button for each feature and set up its functionality
+ */
+
 function ExtraFeature() {
-  //list of features already used
+  // Array to keep track of features that have already been used
   let featuresUsed = [];
-  //list of buttons
+  // Array to store the feature buttons
   let featureButtons = [];
-  //list of features, their names, the functions they run when activated
-  //and the functions to run after its been deactivated
+
   this.features = {
     mass: {
       title: "JUMBO BALL",
       activated: false,
       activate: () => {
-        // 5 times the mass of the cue ball
+        // Increase the mass of the cue ball by 5 times
         snookerBody.setMass(cueBall.ball, cueBall.ball.mass * 5);
       },
       deactivate: () => {
-        // if the mass is smaller than the original mass, reset it
+        // Reset the mass to its original value, if it is greater than the initial mass
         snookerBody.setMass(
           cueBall.ball,
           cueBall.ball.mass * (cueBall.ball.mass > 1 ? 1 / 5 : 1)
@@ -25,17 +32,17 @@ function ExtraFeature() {
       title: "SHRINK SIZE",
       activated: false,
       activate: () => {
-        for (type in ballOrganizer.allBalls) {
-          for (ball of ballOrganizer.allBalls[type]) {
-            //turn all balls ~60% smaller
+        // Iterate through all balls and reduce their size by approximately 60%
+        for (let type in ballOrganizer.allBalls) {
+          for (let ball of ballOrganizer.allBalls[type]) {
             snookerBody.scale(ball.object, 3 / 5, 3 / 5);
           }
         }
       },
       deactivate: () => {
-        for (type in ballOrganizer.allBalls) {
-          for (ball of ballOrganizer.allBalls[type]) {
-            // resets the size of the balls
+        // Reset the size of all balls to their original dimensions
+        for (let type in ballOrganizer.allBalls) {
+          for (let ball of ballOrganizer.allBalls[type]) {
             if (ball.object.area < 91) {
               snookerBody.scale(ball.object, 3 / 5, 3 / 5);
             }
@@ -47,17 +54,18 @@ function ExtraFeature() {
       title: "3X SCORE !!",
       activated: false,
       activate: () => {
-        for (type in ballOrganizer.allBalls) {
-          for (ball of ballOrganizer.allBalls[type]) {
+        // Iterate through all balls and triple their points value
+        for (let type in ballOrganizer.allBalls) {
+          for (let ball of ballOrganizer.allBalls[type]) {
             ball.value *= 3;
           }
         }
       },
       deactivate: () => {
-        // resets the points of all balls
-        for (type in ballOrganizer.allBalls) {
-          for (ball of ballOrganizer.allBalls[type]) {
-            // except colored balls that returns after being pocketed
+        // Reset the points of all balls
+        for (let type in ballOrganizer.allBalls) {
+          for (let ball of ballOrganizer.allBalls[type]) {
+            // Skip colored balls that return after being pocketed
             if (
               ball.color == "red" ||
               ball.value != ballOrganizer.colorfulBalls[ball.color].value
@@ -72,7 +80,7 @@ function ExtraFeature() {
       title: "TO POCKETS",
       activated: false,
       activate: () => {
-        //array of objects that contain the x y coordinates of the balls
+        // Predefined positions for aligning balls to pockets
         let positions = [
           { x: 221, y: 119 },
           { x: 601, y: 119 },
@@ -82,12 +90,11 @@ function ExtraFeature() {
           { x: 981, y: 481 },
         ];
 
-        // ballCounter to only have 6 balls for the 6 pockets be moved
+        // Counter to limit alignment to 6 balls
         let ballCounter = 0;
-        for (type in ballOrganizer.allBalls) {
-          for (ball of ballOrganizer.allBalls[type]) {
-            //randomly assigns balls based on a 70% and 50% probability for the red
-            //and color respectively
+        for (let type in ballOrganizer.allBalls) {
+          for (let ball of ballOrganizer.allBalls[type]) {
+            // Randomly align balls based on a probability (70% for red, 50% for others)
             if (
               random() > (ball.color == "red" ? 0.7 : 0.5) &&
               ballCounter < 6
@@ -103,24 +110,30 @@ function ExtraFeature() {
         }
       },
       deactivate: () => {
+        // No specific deactivation logic needed
         return false;
       },
     },
   };
 
-  //function that makes the button and its functionality
+  /**
+   * Function to create a button for each feature and set up its functionality
+   * @param {*} item: Feature object containing title, activation, and deactivation functions
+   * @param {*} y: Vertical position of the button on the screen
+   */
   const makeFeatureButtons = (item, y) => {
     const button = createButton(item.title);
-    //add button to the button array
+    // Add the button to the featureButtons array
     featureButtons.push(button);
-    //places the button
+    // Set the button's position on the screen
     button.position(25, y);
-    //if the item has been used, deactivate the button
+    // Disable the button if the feature has already been used
     if (featuresUsed.includes(item)) {
       button.attribute("disabled", true);
     }
-    //give onclick event listener to button
+    // Set up the button's click event listener
     button.mousePressed(function () {
+      console.log(item.title);
       item.activate();
       item.activated = true;
       button.attribute("disabled", true);
@@ -128,22 +141,24 @@ function ExtraFeature() {
     });
   };
 
-  //functions that places the button on the screen
+  // Function to place the feature buttons on the screen
   this.placeButtons = () => {
     let y = 200;
-    //hides the previously created buttons to avoid weird visual overlap effect
-    for (button of featureButtons) {
+    // Hide previously created buttons to avoid visual overlap
+    for (let button of featureButtons) {
       button.hide();
     }
-    for (item in this.features) {
+    // Create and position new buttons for each feature
+    for (let item in this.features) {
       y += 50;
       makeFeatureButtons(this.features[item], y);
     }
   };
-  //deactivates the features
+
+  // Function to deactivate all activated features
   this.deactivate = () => {
-    for (item in this.features) {
-      //run the deactivate function of the item that is activated
+    for (let item in this.features) {
+      // Run the deactivate function for each activated feature
       if (this.features[item].activated) {
         this.features[item].deactivate();
         this.features[item].activated = false;
