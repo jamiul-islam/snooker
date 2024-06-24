@@ -1,3 +1,9 @@
+/**
+ * shows the score of the player
+ * @method addScore: adds the score
+ * @param {Number} s - score to be added
+ * @method showScore: shows the scoreboard
+ */
 function LeaderBoard() {
   let score = 0;
   //adds the score
