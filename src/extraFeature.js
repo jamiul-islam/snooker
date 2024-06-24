@@ -11,13 +11,13 @@ function ExtraFeature() {
       activated: false,
       activate: () => {
         //increases the mass by 10x
-        snookerBody.setMass(cueBall.ball, cueBall.ball.mass * 10);
+        snookerBody.setMass(cueBall.cueBall, cueBall.cueBall.mass * 10);
       },
       deactivate: () => {
         //reset the mass back to normal, if mass is smaller than starting mass
         snookerBody.setMass(
-          cueBall.ball,
-          cueBall.ball.mass * (cueBall.ball.mass > 1 ? 1 / 10 : 1)
+          cueBall.cueBall,
+          cueBall.cueBall.mass * (cueBall.cueBall.mass > 1 ? 1 / 10 : 1)
         );
       },
     },

@@ -1,13 +1,13 @@
 function CueBall() {
   this.ball;
-  this.ballConstraint;
+  this.cueBallConstraint;
   this.isConstrained = false;
 
   //creates the ball object
   this.setUpCueBall = (x, y) => {
     this.ball = snookerBodies.circle(x, y, 400 / 72, {
       friction: 0.7,
-      restitution: 0.95,
+      restitution: 0.8,
     });
 
     snookerBody.setMass(this.ball, (this.ball.mass *= 2));
@@ -16,7 +16,7 @@ function CueBall() {
 
   //creates the constraint
   this.setUpConstraint = (x, y) => {
-    this.ballConstraint = snookerConstraint.create({
+    this.cueBallConstraint = snookerConstraint.create({
       pointA: { x: x, y: y },
       bodyB: this.ball,
       stiffness: 0.01,
@@ -27,7 +27,7 @@ function CueBall() {
 
     //enables clicking when constraint is recreated
     document.getElementsByTagName("BODY")[0].style["pointer-events"] = "auto";
-    snookerWorld.add(engine.world, [this.ballConstraint]);
+    snookerWorld.add(engine.world, [this.cueBallConstraint]);
   };
 
   //removes the constraint when ball is released
@@ -85,7 +85,7 @@ function CueBall() {
     helperFunc.drawVertices(this.ball.vertices);
     stroke(0);
     strokeWeight(3);
-    drawConstraint(this.ballConstraint);
+    drawConstraint(this.cueBallConstraint);
     pop();
   };
 
@@ -99,7 +99,7 @@ function CueBall() {
   };
 
   //check whether the cue ball is in field, returns boolean
-  this.inField = () => {
+  this.isInField = () => {
     return cueBall.ball.position.y >= 106 && cueBall.ball.position.y <= 494;
   };
 }

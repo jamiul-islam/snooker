@@ -94,7 +94,7 @@ function draw() {
       ballOrganizer.showTarget(); // Showing the target for the cue ball
 
       // Handling game logic if the cue ball is in the field and not constrained
-      if (cueBall.inField() && !cueBall.isConstrained) {
+      if (cueBall.isInField() && !cueBall.isConstrained) {
         ballOrganizer.drawFoul(); // Drawing foul messages
         gameTable.detectCollision(cueBall.ball); // Detecting collisions with the table
         ballOrganizer.detectCollision(cueBall.ball); // Detecting collisions with other balls
@@ -115,7 +115,7 @@ function draw() {
         leaderBoard.addScore(-4); // Decreasing the score by 4 for a foul
         snookerWorld.remove(engine.world, [
           cueBall.ball,
-          cueBall.ballConstraint,
+          cueBall.cueBallConstraint,
         ]); // Removing the ball and its constraint
         gameStart = false; // Allowing the player to place the cue ball again
       }
@@ -157,7 +157,7 @@ function mouseReleased() {
     }
   } else if (gameStart) {
     // Removing the constraint if the game is in progress
-    cueBall.removeConstraint(cueBall.ballConstraint);
+    cueBall.removeConstraint(cueBall.cueBallConstraint);
     ballOrganizer.ballsSleep(false); // Waking up all balls
   }
 }
