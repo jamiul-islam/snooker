@@ -189,9 +189,9 @@ function mouseReleased() {
 // from the balls being pocketed, but also deductions from foul shots, as well as preventing points from being added if a foul occurred.
 // Next, I added a stopwatch that counts down from 10 minutes. If either the stopwatch runs out, or the player clears the gameTable, they can press
 // ‘r’ to restart. Finally, I also included “superpowers”. This is under its own object with functions that activate, deactivate,
-//and assign their usage through the creation of a button with the p5.js DOM. Some of these powers include, increasing the power of the
+//and assign their usage through the creation of a button with the p5.js DOM. Some of these features include, increasing the power of the
 // cue by multiplying its mass, making the balls smaller, doubling the points of each ball, and randomly aligning balls to the front of
-// each pocket. These powers were my way of giving an arcade feel to an otherwise very professional and technical game. I believe this
+// each pocket. These features were my way of giving an arcade feel to an otherwise very professional and technical game. I believe this
 //to be unique and “has not been seen in snooker gaming before”, as it is a manipulation of the game’s physics and rules in a way unable
 // to be done in real life, and not appropriate for snooker applications which are usually attempting to
 //recreate the reality of the game.
