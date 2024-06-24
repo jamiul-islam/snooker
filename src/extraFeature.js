@@ -109,22 +109,22 @@ function ExtraFeature() {
   };
 
   //function that makes the button and its functionality
-  const makeButton = (power, y) => {
-    const button = createButton(power.title);
+  const makeFeatureButtons = (item, y) => {
+    const button = createButton(item.title);
     //add button to the button array
     featureButtons.push(button);
     //places the button
     button.position(25, y);
-    //if the power has been used, deactivate the button
-    if (featuresUsed.includes(power)) {
+    //if the item has been used, deactivate the button
+    if (featuresUsed.includes(item)) {
       button.attribute("disabled", true);
     }
     //give onclick event listener to button
     button.mousePressed(function () {
-      power.activate();
-      power.activated = true;
+      item.activate();
+      item.activated = true;
       button.attribute("disabled", true);
-      featuresUsed.push(power);
+      featuresUsed.push(item);
     });
   };
 
@@ -135,18 +135,18 @@ function ExtraFeature() {
     for (button of featureButtons) {
       button.hide();
     }
-    for (power in this.features) {
+    for (item in this.features) {
       y += 50;
-      makeButton(this.features[power], y);
+      makeFeatureButtons(this.features[item], y);
     }
   };
   //deactivates the features
   this.deactivate = () => {
-    for (power in this.features) {
-      //run the deactivate function of the power that is activated
-      if (this.features[power].activated) {
-        this.features[power].deactivate();
-        this.features[power].activated = false;
+    for (item in this.features) {
+      //run the deactivate function of the item that is activated
+      if (this.features[item].activated) {
+        this.features[item].deactivate();
+        this.features[item].activated = false;
       }
     }
   };
