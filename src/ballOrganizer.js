@@ -264,7 +264,7 @@ function BallOrganizer() {
   const redBallCollided = () => {
     if ((this.redInside || ballImpacted == "color") && !this.foul) {
       this.foul = true;
-      this.foulText = "Red ball Hit";
+      this.foulText = "Red ball was hit";
       leaderBoard.addScore(-4);
     }
     this.redInside = false;
@@ -275,7 +275,7 @@ function BallOrganizer() {
   const coloredBallsCollided = () => {
     if (!this.redInside && this.allBalls.red.length != 0 && !this.foul) {
       this.foul = true;
-      this.foulText = "Coloured ball Hit";
+      this.foulText = "Colorful ball was Hit";
       leaderBoard.addScore(-4);
     }
     this.redInside = false;
