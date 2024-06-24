@@ -149,17 +149,16 @@ function draw() {
 
 // Function to handle key presses
 function keyTyped() {
-  if (!gameStart && !ballOrganizer.mode) {
-    // Setting ball arrangement mode based on key press
-  }
+  // if (!gameStart && !ballOrganizer.mode) {
+  // }
   if (key.toLowerCase() === "1") {
-    ballOrganizer.setMode("ordered");
+    ballOrganizer.setMode("ordered"); // pyramid style ball arrangement
   }
   if (key.toLowerCase() === "2") {
-    ballOrganizer.setMode("unordered");
+    ballOrganizer.setMode("partial"); // only red balls are randomized
   }
   if (key.toLowerCase() === "3") {
-    ballOrganizer.setMode("partial");
+    ballOrganizer.setMode("unordered"); // all balls are randomized
   }
 
   // Restarting the game if 'r' is pressed
