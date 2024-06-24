@@ -3,6 +3,7 @@
  * @method startCounting: starts counting down
  * @method drawWatch: draws the stopwatch
  */
+
 function Stopwatch() {
   let mins = 10;
   let secs = 0;

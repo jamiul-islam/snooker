@@ -6,6 +6,7 @@
  *        2. disables mouse interaction with the other balls
  *        3. disables the mouse interaction with all balls except the cue ball
  */
+
 function Helper() {
   this.drawShapes = (shapes) => {
     beginShape();

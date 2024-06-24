@@ -1,22 +1,36 @@
+/**
+ * Table class to represent the snooker table and its components
+ * @constructor Table object to represent the snooker table
+ * @method generateCushions Function to generate cushions on the table
+ * @method detectImpact Function to detect impacts between the cue ball and cushions
+ * @method draw Function to draw the table and its components
+ * @method drawCushions Function to draw cushions on the table
+ */
+
 function Table() {
+  // Array to store cushion objects
   let cushions = [];
-  const tableWidth = 800;
-  const tableLength = tableWidth / 2;
-  const boxWidth = (tableWidth / 72) * 1.5;
-  const cushionHeight = 10;
-  const cushionAngle = 0.05;
-  //creates the cushions as a trapezoid
-  this.createCushions = () => {
+
+  // Constants defining table dimensions and cushion properties
+  const widthOfTable = 800;
+  const lengthOfTable = widthOfTable / 2;
+  const widthOfBox = (widthOfTable / 72) * 1.5;
+  const heightOfCushion = 10;
+  const angleOfCushion = 0.05;
+
+  // Function to generate cushions as trapezoids and add them to the table
+  this.generateCushions = () => {
+    // Add six cushions at specific positions with specified properties
     cushions.push(
       snookerBodies.trapezoid(
-        402,
-        105,
-        tableLength - boxWidth * 2 - 13,
-        cushionHeight,
-        -0.07,
+        402, // x position
+        105, // y position
+        lengthOfTable - widthOfBox * 2 - 13, // top width
+        heightOfCushion, // height
+        -0.07, // angle
         {
-          isStatic: true,
-          restitution: 1,
+          isStatic: true, // Static so they don't move
+          restitution: 1, // Bounciness
         }
       )
     );
@@ -24,9 +38,9 @@ function Table() {
       snookerBodies.trapezoid(
         800,
         105,
-        tableLength - boxWidth * 2 - 10,
-        cushionHeight,
-        -cushionAngle,
+        lengthOfTable - widthOfBox * 2 - 10,
+        heightOfCushion,
+        -angleOfCushion,
         {
           isStatic: true,
           restitution: 1,
@@ -37,12 +51,12 @@ function Table() {
       snookerBodies.trapezoid(
         205,
         300,
-        tableLength - boxWidth * 2 + 9,
-        cushionHeight,
-        cushionAngle,
+        lengthOfTable - widthOfBox * 2 + 9,
+        heightOfCushion,
+        angleOfCushion,
         {
           isStatic: true,
-          angle: Math.PI / 2,
+          angle: Math.PI / 2, // Rotate 90 degrees
           restitution: 1,
         }
       )
@@ -51,9 +65,9 @@ function Table() {
       snookerBodies.trapezoid(
         403,
         495,
-        tableLength - boxWidth * 2 + 9,
-        cushionHeight,
-        cushionAngle,
+        lengthOfTable - widthOfBox * 2 + 9,
+        heightOfCushion,
+        angleOfCushion,
         {
           isStatic: true,
           restitution: 1,
@@ -64,9 +78,9 @@ function Table() {
       snookerBodies.trapezoid(
         797,
         495,
-        tableLength - boxWidth * 2 + 12,
-        cushionHeight,
-        cushionAngle,
+        lengthOfTable - widthOfBox * 2 + 12,
+        heightOfCushion,
+        angleOfCushion,
         {
           isStatic: true,
           restitution: 1,
@@ -77,115 +91,109 @@ function Table() {
       snookerBodies.trapezoid(
         995,
         300,
-        tableLength - boxWidth * 2 - 12,
-        cushionHeight,
-        -cushionAngle,
+        lengthOfTable - widthOfBox * 2 - 12,
+        heightOfCushion,
+        -angleOfCushion,
         {
           isStatic: true,
-          angle: Math.PI / 2,
+          angle: Math.PI / 2, // Rotate 90 degrees
           restitution: 1,
         }
       )
     );
-    //adds the cushions to the world
-    for (cushion of cushions) {
+
+    // Add cushions to the world for rendering and physics calculations
+    for (let cushion of cushions) {
       snookerWorld.add(engine.world, [cushion]);
     }
   };
 
-  const drawPlayingField = () => {
+  // Function to draw the table's playing field
+  const drawTableField = () => {
     noStroke();
-    //playing field
-    fill("#4e8834");
-    rect(200, 100, tableWidth, tableLength);
+    fill("#4e8834"); // Green color
+    rect(200, 100, widthOfTable, lengthOfTable); // Draw rectangle representing the field
   };
 
-  const drawRailing = () => {
-    fill("#40230d");
-    //left
-    rect(185, 100, 15, tableLength);
-
-    //top
-    rect(200, 85, tableWidth, 15);
-
-    //right
-    rect(1000, 100, 15, tableLength);
-
-    //bottom
-    rect(200, 500, tableWidth, 15);
+  // Function to draw the sides (rails) around the table
+  const drawSides = () => {
+    fill("#40230d"); // Brown color for the rails
+    rect(185, 100, 15, lengthOfTable); // Left rail
+    rect(200, 85, widthOfTable, 15); // Top rail
+    rect(1000, 100, 15, lengthOfTable); // Right rail
+    rect(200, 500, widthOfTable, 15); // Bottom rail
   };
 
-  const drawYellowBoxes = () => {
-    fill("#f1d74a");
-    //top left
-    rect(185, 85, 25, 25, 15, 0, 0, 0);
-    //top mid
-    rect(588, 85, 24, 15);
-    //top right
-    rect(990, 85, 25, 25, 0, 15, 0, 0);
-    //bottom left
-    rect(185, 490, 25, 25, 0, 0, 0, 15);
-    //bottom mid
-    rect(588, 500, 24, 15);
-    //bottom right
-    rect(990, 490, 25, 25, 0, 0, 15, 0);
+  // Function to draw yellow marking boxes on the table
+  const drawYellowBox = () => {
+    fill("#f1d74a"); // Yellow color
+    rect(185, 85, 25, 25, 15, 0, 0, 0); // Top left
+    rect(588, 85, 24, 15); // Top middle
+    rect(990, 85, 25, 25, 0, 15, 0, 0); // Top right
+    rect(185, 490, 25, 25, 0, 0, 0, 15); // Bottom left
+    rect(588, 500, 24, 15); // Bottom middle
+    rect(990, 490, 25, 25, 0, 0, 15, 0); // Bottom right
   };
 
-  const drawHoles = () => {
-    fill(0);
-    //top left
-    ellipse(205, 104, boxWidth);
-    //top mid
-    ellipse(600, 104, boxWidth);
-    //top right
-    ellipse(996, 104, boxWidth);
-    //bottom left
-    ellipse(205, 495, boxWidth);
-    //bottom mid
-    ellipse(600, 495, boxWidth);
-    //bottom right
-    ellipse(996, 495, boxWidth);
+  // Function to draw holes on the table
+  const drawTableHoles = () => {
+    fill(0); // Black color
+    ellipse(205, 104, widthOfBox); // Top left
+    ellipse(600, 104, widthOfBox); // Top middle
+    ellipse(996, 104, widthOfBox); // Top right
+    ellipse(205, 495, widthOfBox); // Bottom left
+    ellipse(600, 495, widthOfBox); // Bottom middle
+    ellipse(996, 495, widthOfBox); // Bottom right
   };
 
+  // Function to draw the "D" line on the table
   const drawDLine = () => {
-    fill(255);
-    stroke(255);
+    fill(255); // White color
+    stroke(255); // White stroke
     line(
-      200 + tableWidth / 5,
+      200 + widthOfTable / 5,
       100 + 15,
-      200 + tableWidth / 5,
-      tableLength + 100 - 15
-    );
+      200 + widthOfTable / 5,
+      lengthOfTable + 100 - 15
+    ); // Draw vertical line
     noFill();
-    arc(200 + tableWidth / 5, 175 + 370 / 3, 150, 150, 90, 270);
+    arc(200 + widthOfTable / 5, 175 + 370 / 3, 150, 150, 90, 270); // Draw semicircle arc
   };
 
-  this.detectCollision = (cueBall) => {
-    //changes the render of the cushion when colliding with the cue ball
-    for (cushion of cushions) {
+  /**
+   * Function to detect impacts between the cue ball and cushions
+   * @param {*} cueBall: The cue ball object
+   */
+  this.detectImpact = (cueBall) => {
+    for (let cushion of cushions) {
       if (snookerCollision.collides(cueBall, cushion)) {
-        cushion.render.visible = false;
+        cushion.render.visible = false; // Hide cushion on collision
       } else {
-        cushion.render.visible = true;
+        cushion.render.visible = true; // Show cushion otherwise
       }
     }
   };
 
+  /**
+   * Function to draw cushions on the table
+   * @param {*} c: Array of cushion objects
+   */
   const drawCushions = (c) => {
-    for (cushion of c) {
+    for (let cushion of c) {
       push();
       noStroke();
-      //changes the fill between dark n light green, depending on render visibility
-      fill(cushion.render.visible ? "#346219" : "#69F319");
-      helperFunc.drawShapes(cushion.vertices);
+      fill(cushion.render.visible ? "#346219" : "#69F319"); // Dark or light green based on visibility
+      helperFunc.drawShapes(cushion.vertices); // Draw the cushion shape
       pop();
     }
   };
+
+  // Main draw function to render the table and its components
   this.draw = function () {
-    drawPlayingField();
-    drawRailing();
-    drawYellowBoxes();
-    drawHoles();
+    drawTableField();
+    drawSides();
+    drawYellowBox();
+    drawTableHoles();
     drawDLine();
     drawCushions(cushions);
   };

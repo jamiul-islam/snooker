@@ -5,6 +5,7 @@
  * @param {*} value: value of the ball
  * @returns an object with the matter js body, the ball's color, and the value
  */
+
 function Ball(x, y, color, value) {
   return {
     object: snookerBodies.circle(x, y, 400 / 72, {

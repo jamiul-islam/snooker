@@ -6,8 +6,8 @@ function CueBall() {
   //creates the ball object
   this.setUpCueBall = (x, y) => {
     this.ball = snookerBodies.circle(x, y, 400 / 72, {
-      friction: 0.7,
-      restitution: 0.95,
+      friction: 0.6,
+      restitution: 0.8,
     });
 
     snookerBody.setMass(this.ball, (this.ball.mass *= 2));

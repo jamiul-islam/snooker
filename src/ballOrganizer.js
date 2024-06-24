@@ -1,4 +1,11 @@
-//initialize the all balls object to store red and colored balls
+/**
+ * this function is used to organize the balls in the snooker game
+ * @constructor BallOrganizer object to organize the balls in the snooker game
+ * @method setMode Function to set the mode and create balls based on it
+ * @method createRedBalls Function to create red balls in a pyramid arrangement
+ * @method createBall Function to create a ball and add it to the world and respective array
+ */
+
 function BallOrganizer() {
   this.allBalls = {
     red: [],
@@ -235,14 +242,14 @@ function BallOrganizer() {
    * Function to detect collisions between the cue ball and other balls
    * @param {*} cueBall: the cue ball object
    */
-  this.detectCollision = (cueBall) => {
+  this.detectImpact = (cueBall) => {
     for (ballType in this.allBalls) {
       for (ball of this.allBalls[ballType]) {
         if (snookerCollision.collides(cueBall, ball.object)) {
           if (ball.color == "red") {
-            redBallCollided();
+            redBallImpacted();
           } else {
-            coloredBallsCollided();
+            coloredBallsImpacted();
           }
           target = "Red ball";
         }
@@ -261,7 +268,7 @@ function BallOrganizer() {
   };
 
   // Function to handle logic when a red ball is hit
-  const redBallCollided = () => {
+  const redBallImpacted = () => {
     if ((this.redInside || ballImpacted == "color") && !this.foul) {
       this.foul = true;
       this.foulText = "Red ball was hit";
@@ -272,7 +279,7 @@ function BallOrganizer() {
   };
 
   // Function to handle logic when a colored ball is hit
-  const coloredBallsCollided = () => {
+  const coloredBallsImpacted = () => {
     if (!this.redInside && this.allBalls.red.length != 0 && !this.foul) {
       this.foul = true;
       this.foulText = "Colorful ball was Hit";

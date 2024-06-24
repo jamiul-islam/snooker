@@ -1,3 +1,8 @@
+/**
+ * TODO: cueBall.js
+ * TODO: extraFeature.js
+ */
+
 // Importing Matter.js engine modules for physics simulation
 let snookerEngine = Matter.Engine;
 const snookerRender = Matter.Render;
@@ -31,7 +36,7 @@ function setup() {
   canvas = createCanvas(1300, 800); // Creating the game canvas
   angleMode(DEGREES); // Setting angle mode to degrees
   background(0); // Setting background color to black
-  gameTable.createCushions(); // Creating the table cushions
+  gameTable.generateCushions(); // Creating the table cushions
   helperFunc.snookerMouseInteraction(); // Setting up mouse interaction
 }
 
@@ -96,8 +101,8 @@ function draw() {
       // Handling game logic if the cue ball is in the field and not constrained
       if (cueBall.inField() && !cueBall.isConstrained) {
         ballOrganizer.drawFoul(); // Drawing foul messages
-        gameTable.detectCollision(cueBall.ball); // Detecting collisions with the table
-        ballOrganizer.detectCollision(cueBall.ball); // Detecting collisions with other balls
+        gameTable.detectImpact(cueBall.ball); // Detecting collisions with the table
+        ballOrganizer.detectImpact(cueBall.ball); // Detecting collisions with other balls
         ballOrganizer.detectFalling(); // Detecting if any ball falls into a pocket
         ballOrganizer.checkWin(); // Checking if the player has won
 
