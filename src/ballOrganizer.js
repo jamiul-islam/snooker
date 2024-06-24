@@ -1,8 +1,11 @@
+//initialize the all balls object to store red and colored balls
 function BallOrganizer() {
   this.allBalls = {
     red: [],
     color: [],
   };
+
+  // Initialize foul state and other game-related variables
   this.foul = false;
   let won = false;
   this.foulText = "";
@@ -10,9 +13,9 @@ function BallOrganizer() {
   let target = "Red Ball";
   this.redInside = false;
   let ballImpacted;
-  // ball arrangement mode
   this.mode;
-  // details of the colored balls
+
+  // Initialize the positions and values of colored balls
   this.colorfulBalls = {
     pink: {
       x: 720,
@@ -46,19 +49,25 @@ function BallOrganizer() {
     },
   };
 
-  //changes the mode and creates the balls
+  /**
+   * Function to set the mode and create balls based on it
+   * @param {*} mode: mode of ball arrangement
+   */
   this.setMode = (mode) => {
     this.mode = mode;
     createBalls(mode);
   };
 
-  //creates specifically red balls with the patterns
+  /**
+   * Function to create red balls in a pyramid arrangement
+   */
   const createRedBalls = () => {
     let startX = 725;
     let startY = 305;
     const radius = 400 / 72;
     let space = 4;
-    //creates the pyramid pattern for the red ball
+
+    // Create red balls in a pyramid arrangement
     for (var i = 0; i < 6; i++) {
       let yPos = startY - i * radius;
       for (var j = 0; j < i; j++) {
@@ -72,19 +81,26 @@ function BallOrganizer() {
     }
   };
 
-  //creates a ball and adds it to the appropriate array
-  //and the world
+  /**
+   * Function to create a ball and add it to the world and respective array
+   * @param {*} x: x-coordinate of the ball
+   * @param {*} y: y-coordinate of the ball
+   * @param {*} color: color of the ball
+   * @param {*} value: value of the ball
+   */
   const createBall = (x, y, color, value) => {
     let ball = new Ball(x, y, color, value);
     this.allBalls[color == "red" ? "red" : "color"].push(ball);
     snookerWorld.add(engine.world, [ball.object]);
   };
 
-  //creates the balls with positions based on the mode
+  /**
+   * Function to create balls based on the selected mode
+   * @param {*} mode: mode of ball arrangement
+   */
   const createBalls = (mode) => {
-    //certain balls are awake so that placement doesn't overlap
-    //especially on the modes that require random placement
     switch (mode) {
+      // Create red balls in a pyramid arrangement
       case "ordered":
         createRedBalls();
         for (color in this.colorfulBalls) {
@@ -96,16 +112,15 @@ function BallOrganizer() {
           );
         }
         break;
+
+      // Create red balls randomly positioned
       case "unordered":
-        //set all balls awake so they don't overlap
         for (let i = 0; i < 15; i++) {
-          //randomly place the red balls
           createBall(random(249, 949), random(149, 399), "red", 1);
           snookerSleeping.set(this.allBalls["red"][i]["object"], false);
         }
         for (var i = 0; i < Object.keys(this.colorfulBalls).length; i++) {
           let color = Object.keys(this.colorfulBalls)[i];
-          //randomly place the colored balls
           createBall(
             random(249, 949),
             random(149, 399),
@@ -115,12 +130,14 @@ function BallOrganizer() {
           snookerSleeping.set(this.allBalls["color"][i]["object"], false);
         }
         break;
+
+      // Create red balls randomly positioned
       case "partial":
         for (let i = 0; i < 15; i++) {
           createBall(random(249, 949), random(149, 399), "red", 1);
-          //set red balls awake so they dont overlap
           snookerSleeping.set(this.allBalls["red"][i]["object"], false);
         }
+        // Create colored balls in fixed positions
         for (var i = 0; i < Object.keys(this.colorfulBalls).length; i++) {
           let color = Object.keys(this.colorfulBalls)[i];
           createBall(
@@ -133,7 +150,10 @@ function BallOrganizer() {
     }
   };
 
-  //changes the sleep state of the balls
+  /**
+   * Function to set the sleep state of all balls
+   * @param {*} asleep: boolean value to set the sleeping state of the balls
+   */
   this.ballsSleep = (asleep) => {
     for (type in this.allBalls) {
       for (ball of this.allBalls[type]) {
@@ -142,7 +162,9 @@ function BallOrganizer() {
     }
   };
 
-  //draws the balls in the balls object
+  /**
+   * Function to draw all the balls on the canvas
+   */
   this.drawBalls = () => {
     for (ballType in this.allBalls) {
       for (ball of this.allBalls[ballType]) {
@@ -155,28 +177,26 @@ function BallOrganizer() {
     }
   };
 
-  //detects the balls going into holes
+  /**
+   * Function to detect when balls fall into pockets
+   * and handle the game logic accordingly
+   * @returns a message if a foul is detected
+   */
   this.detectFalling = () => {
-    //iterates through the balls and checks if they're in field
     for (ballType in this.allBalls) {
       for (ball of this.allBalls[ballType]) {
         if (ball.object.position.y <= 106 || ball.object.position.y >= 494) {
           if (ball.color == "red") {
             this.redInside = true;
-            //if its red remove it from the array
             removeBall(this.allBalls.red, this.allBalls.red.indexOf(ball));
             target = "Colored Ball";
           } else {
-            //removes the original ball from the object
             removeBall(this.allBalls.color, this.allBalls.color.indexOf(ball));
-            //in one turn adds the number of consecutive color balls that fell
             subsequentColor++;
-            //if its greater or equal to two put a prompt
             if (subsequentColor >= 2) {
               this.foul = true;
               this.foulText = "two subsequent colorful balls fell";
             }
-            //adds the ball back if there are still reds on the table
             if (this.allBalls.red.length != 0) {
               createBall(
                 this.colorfulBalls[ball.color].x,
@@ -195,21 +215,26 @@ function BallOrganizer() {
             }
             this.redInside = false;
           }
-          //adds the value of the ball pocketed if there is no foul
           leaderBoard.addScore(this.foul ? 0 : ball.value);
         }
       }
     }
   };
 
+  /**
+   * Function to remove a ball from the world and array
+   * @param {*} array: array from which the ball is to be removed
+   * @param {*} index: index of the ball to be removed
+   */
   const removeBall = (array, index) => {
-    //removes the ball from the world
     snookerWorld.remove(engine.world, [array[index].object]);
-    //removes it from the array
     array.splice(index, 1);
   };
 
-  //detects collision between the white ball and the red or colored
+  /**
+   * Function to detect collisions between the cue ball and other balls
+   * @param {*} cueBall: the cue ball object
+   */
   this.detectCollision = (cueBall) => {
     for (ballType in this.allBalls) {
       for (ball of this.allBalls[ballType]) {
@@ -225,20 +250,18 @@ function BallOrganizer() {
     }
   };
 
+  // Function to draw a foul message on the canvas
   this.drawFoul = () => {
-    //draws the foul by making it red if there is a foul
     push();
     textSize(24);
     stroke(this.foul ? "red" : 0);
     fill(this.foul ? "red" : 0);
-    //gives the description based on the foul message
     text("Foul: " + this.foulText, 460, 690);
     pop();
   };
 
-  //code that runs if red ball is hit
+  // Function to handle logic when a red ball is hit
   const redBallCollided = () => {
-    //checks if its a legal or non legal hit
     if ((this.redInside || ballImpacted == "color") && !this.foul) {
       this.foul = true;
       this.foulText = "Red ball Hit";
@@ -248,9 +271,8 @@ function BallOrganizer() {
     ballImpacted = "red";
   };
 
-  //code that runs if a colored ball is hit
+  // Function to handle logic when a colored ball is hit
   const coloredBallsCollided = () => {
-    //checks if its a legal or non legal hit
     if (!this.redInside && this.allBalls.red.length != 0 && !this.foul) {
       this.foul = true;
       this.foulText = "Coloured ball Hit";
@@ -260,7 +282,7 @@ function BallOrganizer() {
     ballImpacted = "color";
   };
 
-  //starts a new turn by resetting to default variables
+  // Function to start a new turn, resetting necessary variables
   this.newTurn = () => {
     this.foul = false;
     this.foulText = "";
@@ -269,7 +291,7 @@ function BallOrganizer() {
     this.ballsSleep(true);
   };
 
-  //checks for a win and draws if player has cleared the table
+  // Function to check for a win condition and display a message if won
   this.checkWin = () => {
     if (won) {
       push();
@@ -284,7 +306,7 @@ function BallOrganizer() {
     }
   };
 
-  //shows the target ball
+  // Function to show the target ball on the canvas
   this.showTarget = () => {
     push();
     textSize(20);
