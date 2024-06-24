@@ -54,7 +54,7 @@ function draw() {
   pop();
 
   // Drawing the stopwatch timer
-  stopwatch.drawTimer();
+  stopwatch.drawWatch();
 
   // Checking if ball arrangement mode is selected
   if (!ballOrganizer.mode) {
@@ -82,7 +82,7 @@ function draw() {
       text("Please click inside the D line to place the white ball", 200, 600);
     } else {
       // Game has started, showing additional instructions
-      stopwatch.startTimer(); // Starting the stopwatch
+      stopwatch.startCounting(); // Starting the stopwatch
 
       push();
       textSize(24);
