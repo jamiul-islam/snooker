@@ -26,16 +26,16 @@ function ExtraFeature() {
       activated: false,
       activate: () => {
         //iterates through balls array
-        for (type in ballOrganizer.balls) {
-          for (ball of ballOrganizer.balls[type]) {
+        for (type in ballOrganizer.allBalls) {
+          for (ball of ballOrganizer.allBalls[type]) {
             //makes all balls 33% smaller
             snookerBody.scale(ball.object, 2 / 3, 2 / 3);
           }
         }
       },
       deactivate: () => {
-        for (type in ballOrganizer.balls) {
-          for (ball of ballOrganizer.balls[type]) {
+        for (type in ballOrganizer.allBalls) {
+          for (ball of ballOrganizer.allBalls[type]) {
             //resets the area back to normal, if the area is smaller than starting
             if (ball.object.area < 91) {
               snookerBody.scale(ball.object, 3 / 2, 3 / 2);
@@ -49,20 +49,20 @@ function ExtraFeature() {
       activated: false,
       activate: () => {
         //iterates through all balls and doubles their values
-        for (type in ballOrganizer.balls) {
-          for (ball of ballOrganizer.balls[type]) {
+        for (type in ballOrganizer.allBalls) {
+          for (ball of ballOrganizer.allBalls[type]) {
             ball.value *= 2;
           }
         }
       },
       deactivate: () => {
         //resets the points of all balls,
-        for (type in ballOrganizer.balls) {
-          for (ball of ballOrganizer.balls[type]) {
+        for (type in ballOrganizer.allBalls) {
+          for (ball of ballOrganizer.allBalls[type]) {
             //except colored balls that returns after being pocketed
             if (
               ball.color == "red" ||
-              ball.value != ballOrganizer.coloredBalls[ball.color].value
+              ball.value != ballOrganizer.colorfulBalls[ball.color].value
             ) {
               ball.value *= 1 / 2;
             }
@@ -86,8 +86,8 @@ function ExtraFeature() {
 
         //counter to only have 6 balls for the 6 pockets be moved
         let counter = 0;
-        for (type in ballOrganizer.balls) {
-          for (ball of ballOrganizer.balls[type]) {
+        for (type in ballOrganizer.allBalls) {
+          for (ball of ballOrganizer.allBalls[type]) {
             //randomly assigns balls based on a 70% and 50% probability for the red
             //and color respectively
             if (random() > (ball.color == "red" ? 0.7 : 0.5) && counter < 6) {

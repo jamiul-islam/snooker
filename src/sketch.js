@@ -152,13 +152,13 @@ function mouseReleased() {
       gameStart = true;
       cueBall.setUpCueBall(mouseX, mouseY); // Setting up the cue ball at mouse position
       cueBall.setUpConstraint(mouseX, mouseY); // Setting up the cue ball constraint
-      ballOrganizer.setBallsSleep(true); // Putting all balls to sleep
+      ballOrganizer.ballsSleep(true); // Putting all balls to sleep
       feature.placeButtons(); // Placing additional feature buttons
     }
   } else if (gameStart) {
     // Removing the constraint if the game is in progress
     cueBall.removeConstraint(cueBall.ballConstraint);
-    ballOrganizer.setBallsSleep(false); // Waking up all balls
+    ballOrganizer.ballsSleep(false); // Waking up all balls
   }
 }
 

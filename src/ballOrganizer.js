@@ -1,19 +1,19 @@
 function BallOrganizer() {
-  this.balls = {
+  this.allBalls = {
     red: [],
     color: [],
   };
   this.foul = false;
   let won = false;
-  this.foulMessage = "";
-  let consecColor = 0;
+  this.foulText = "";
+  let subsequentColor = 0;
   let target = "Red Ball";
-  this.redBallIn = false;
-  let ballCollided;
-  //mode for the balls to be organized
+  this.redInside = false;
+  let ballImpacted;
+  // ball arrangement mode
   this.mode;
-  //information of the colored balls
-  this.coloredBalls = {
+  // details of the colored balls
+  this.colorfulBalls = {
     pink: {
       x: 720,
       y: 310 - 800 / 72,
@@ -54,17 +54,17 @@ function BallOrganizer() {
 
   //creates specifically red balls with the patterns
   const createRedBalls = () => {
-    let startingX = 725;
-    let startingY = 305;
+    let startX = 725;
+    let startY = 305;
     const radius = 400 / 72;
-    let gap = 4;
+    let space = 4;
     //creates the pyramid pattern for the red ball
     for (var i = 0; i < 6; i++) {
-      let ypos = startingY - i * radius;
+      let yPos = startY - i * radius;
       for (var j = 0; j < i; j++) {
         createBall(
-          startingX + i * (radius + gap),
-          ypos + 2 * j * radius,
+          startX + i * (radius + space),
+          yPos + 2 * j * radius,
           "red",
           1
         );
@@ -76,7 +76,7 @@ function BallOrganizer() {
   //and the world
   const createBall = (x, y, color, value) => {
     let ball = new Ball(x, y, color, value);
-    this.balls[color == "red" ? "red" : "color"].push(ball);
+    this.allBalls[color == "red" ? "red" : "color"].push(ball);
     snookerWorld.add(engine.world, [ball.object]);
   };
 
@@ -87,12 +87,12 @@ function BallOrganizer() {
     switch (mode) {
       case "ordered":
         createRedBalls();
-        for (color in this.coloredBalls) {
+        for (color in this.colorfulBalls) {
           createBall(
-            this.coloredBalls[color]["x"],
-            this.coloredBalls[color]["y"],
+            this.colorfulBalls[color]["x"],
+            this.colorfulBalls[color]["y"],
             color,
-            this.coloredBalls[color]["value"]
+            this.colorfulBalls[color]["value"]
           );
         }
         break;
@@ -101,42 +101,42 @@ function BallOrganizer() {
         for (let i = 0; i < 15; i++) {
           //randomly place the red balls
           createBall(random(249, 949), random(149, 399), "red", 1);
-          snookerSleeping.set(this.balls["red"][i]["object"], false);
+          snookerSleeping.set(this.allBalls["red"][i]["object"], false);
         }
-        for (var i = 0; i < Object.keys(this.coloredBalls).length; i++) {
-          let color = Object.keys(this.coloredBalls)[i];
+        for (var i = 0; i < Object.keys(this.colorfulBalls).length; i++) {
+          let color = Object.keys(this.colorfulBalls)[i];
           //randomly place the colored balls
           createBall(
             random(249, 949),
             random(149, 399),
             color,
-            this.coloredBalls[color]["value"]
+            this.colorfulBalls[color]["value"]
           );
-          snookerSleeping.set(this.balls["color"][i]["object"], false);
+          snookerSleeping.set(this.allBalls["color"][i]["object"], false);
         }
         break;
       case "partial":
         for (let i = 0; i < 15; i++) {
           createBall(random(249, 949), random(149, 399), "red", 1);
           //set red balls awake so they dont overlap
-          snookerSleeping.set(this.balls["red"][i]["object"], false);
+          snookerSleeping.set(this.allBalls["red"][i]["object"], false);
         }
-        for (var i = 0; i < Object.keys(this.coloredBalls).length; i++) {
-          let color = Object.keys(this.coloredBalls)[i];
+        for (var i = 0; i < Object.keys(this.colorfulBalls).length; i++) {
+          let color = Object.keys(this.colorfulBalls)[i];
           createBall(
-            this.coloredBalls[color]["x"],
-            this.coloredBalls[color]["y"],
+            this.colorfulBalls[color]["x"],
+            this.colorfulBalls[color]["y"],
             color,
-            this.coloredBalls[color]["value"]
+            this.colorfulBalls[color]["value"]
           );
         }
     }
   };
 
   //changes the sleep state of the balls
-  this.setBallsSleep = (asleep) => {
-    for (type in this.balls) {
-      for (ball of this.balls[type]) {
+  this.ballsSleep = (asleep) => {
+    for (type in this.allBalls) {
+      for (ball of this.allBalls[type]) {
         snookerSleeping.set(ball.object, asleep);
       }
     }
@@ -144,8 +144,8 @@ function BallOrganizer() {
 
   //draws the balls in the balls object
   this.drawBalls = () => {
-    for (balltype in this.balls) {
-      for (ball of this.balls[balltype]) {
+    for (ballType in this.allBalls) {
+      for (ball of this.allBalls[ballType]) {
         push();
         fill(ball.color);
         noStroke();
@@ -158,39 +158,42 @@ function BallOrganizer() {
   //detects the balls going into holes
   this.detectFalling = () => {
     //iterates through the balls and checks if they're in field
-    for (balltype in this.balls) {
-      for (ball of this.balls[balltype]) {
+    for (ballType in this.allBalls) {
+      for (ball of this.allBalls[ballType]) {
         if (ball.object.position.y <= 106 || ball.object.position.y >= 494) {
           if (ball.color == "red") {
-            this.redBallIn = true;
+            this.redInside = true;
             //if its red remove it from the array
-            removeBall(this.balls.red, this.balls.red.indexOf(ball));
+            removeBall(this.allBalls.red, this.allBalls.red.indexOf(ball));
             target = "Colored Ball";
           } else {
             //removes the original ball from the object
-            removeBall(this.balls.color, this.balls.color.indexOf(ball));
+            removeBall(this.allBalls.color, this.allBalls.color.indexOf(ball));
             //in one turn adds the number of consecutive color balls that fell
-            consecColor++;
+            subsequentColor++;
             //if its greater or equal to two put a prompt
-            if (consecColor >= 2) {
+            if (subsequentColor >= 2) {
               this.foul = true;
-              this.foulMessage = "Two Consecutive Colored balls fell";
+              this.foulText = "two subsequent colorful balls fell";
             }
             //adds the ball back if there are still reds on the table
-            if (this.balls.red.length != 0) {
+            if (this.allBalls.red.length != 0) {
               createBall(
-                this.coloredBalls[ball.color].x,
-                this.coloredBalls[ball.color].y,
+                this.colorfulBalls[ball.color].x,
+                this.colorfulBalls[ball.color].y,
                 ball.color,
                 ball.value
               );
             } else {
               target = "Red Ball";
             }
-            if (this.balls.red.length == 0 && this.balls.color.length == 0) {
+            if (
+              this.allBalls.red.length == 0 &&
+              this.allBalls.color.length == 0
+            ) {
               won = true;
             }
-            this.redBallIn = false;
+            this.redInside = false;
           }
           //adds the value of the ball pocketed if there is no foul
           leaderBoard.addScore(this.foul ? 0 : ball.value);
@@ -208,8 +211,8 @@ function BallOrganizer() {
 
   //detects collision between the white ball and the red or colored
   this.detectCollision = (cueBall) => {
-    for (balltype in this.balls) {
-      for (ball of this.balls[balltype]) {
+    for (ballType in this.allBalls) {
+      for (ball of this.allBalls[ballType]) {
         if (snookerCollision.collides(cueBall, ball.object)) {
           if (ball.color == "red") {
             redBallCollided();
@@ -229,41 +232,41 @@ function BallOrganizer() {
     stroke(this.foul ? "red" : 0);
     fill(this.foul ? "red" : 0);
     //gives the description based on the foul message
-    text("Foul: " + this.foulMessage, 460, 690);
+    text("Foul: " + this.foulText, 460, 690);
     pop();
   };
 
   //code that runs if red ball is hit
   const redBallCollided = () => {
     //checks if its a legal or non legal hit
-    if ((this.redBallIn || ballCollided == "color") && !this.foul) {
+    if ((this.redInside || ballImpacted == "color") && !this.foul) {
       this.foul = true;
-      this.foulMessage = "Red ball Hit";
+      this.foulText = "Red ball Hit";
       leaderBoard.addScore(-4);
     }
-    this.redBallIn = false;
-    ballCollided = "red";
+    this.redInside = false;
+    ballImpacted = "red";
   };
 
   //code that runs if a colored ball is hit
   const coloredBallsCollided = () => {
     //checks if its a legal or non legal hit
-    if (!this.redBallIn && this.balls.red.length != 0 && !this.foul) {
+    if (!this.redInside && this.allBalls.red.length != 0 && !this.foul) {
       this.foul = true;
-      this.foulMessage = "Coloured ball Hit";
+      this.foulText = "Coloured ball Hit";
       leaderBoard.addScore(-4);
     }
-    this.redBallIn = false;
-    ballCollided = "color";
+    this.redInside = false;
+    ballImpacted = "color";
   };
 
-  //startsa new turn by resetting to default variables
+  //starts a new turn by resetting to default variables
   this.newTurn = () => {
     this.foul = false;
-    this.foulMessage = "";
-    ballCollided = "";
-    consecColor = 0;
-    this.setBallsSleep(true);
+    this.foulText = "";
+    ballImpacted = "";
+    subsequentColor = 0;
+    this.ballsSleep(true);
   };
 
   //checks for a win and draws if player has cleared the table
