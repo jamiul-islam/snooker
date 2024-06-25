@@ -1,6 +1,6 @@
 /**
  * ------------------------COMMENTARY------------------------
- * This snooker application is designed with a unique blend of professional gameplay mechanics and arcade-style features.
+ * My snooker application is designed with a unique blend of professional gameplay mechanics and arcade-style features.
  * The game table is visually rendered using p5.js, while the physical interactions of the balls and cushions are handled by Matter.js, ensuring realistic physics.
  *
  * The cue ball movement utilizes a slingshot-style mechanism, enhancing the user experience.
@@ -18,7 +18,7 @@
  * A scoreboard system tracks the player's score, accounting for both successful shots and fouls.
  * A stopwatch adds a time-based challenge, counting down from 10 minutes and allowing players to restart the game upon completion or timeout.
  *
- * Overall, this snooker application offers a unique and engaging experience by combining realistic physics and professional gameplay with creative, arcade-inspired features.
+ * Overall, my snooker application offers a unique and engaging experience by combining realistic physics and professional gameplay with creative, arcade-inspired features.
  * The result is a dynamic and entertaining game that stands out from traditional snooker simulations.
  */
 

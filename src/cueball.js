@@ -26,8 +26,8 @@ function CueBall() {
   this.cueBallInit = (x, y) => {
     // Create a circle representing the cue ball with specific friction and restitution
     this.ball = snookerBodies.circle(x, y, 400 / 72, {
-      friction: 0.4,
       restitution: 0.7,
+      friction: 0.4,
     });
 
     // Double the mass of the cue ball
