@@ -26,7 +26,7 @@ function Stopwatch() {
   this.drawWatch = () => {
     push();
     textSize(18);
-    fill("white");
+    fill(255);
     stroke(255);
     // if minute value is less than 10, add a 0 before the number
     if (mins + secs != 0) {

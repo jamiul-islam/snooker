@@ -50,18 +50,21 @@ var stopwatch = new Stopwatch();
 var feature = new ExtraFeature();
 var helperFunc = new Helper();
 
+var imageBg; // Variable to store the background image
+
 // p5.js setup function, runs once at the start
 function setup() {
-  canvas = createCanvas(1300, 800); // Creating the game canvas
+  canvas = createCanvas(1280, 720); // Creating the game canvas
   angleMode(DEGREES); // Setting angle mode to degrees
   background(0); // Setting background color to black
   gameTable.generateCushions(); // Creating the table cushions
   helperFunc.snookerMouseInteraction(); // Setting up mouse interaction
+  imageBg = loadImage("/assets/patrick-tomasso-QMDap1TAu0g-unsplash.jpg"); // Loading the background image
 }
 
 // p5.js draw function, runs continuously
 function draw() {
-  background(0); // Clearing the canvas
+  background(imageBg); // Clearing the canvas
   snookerEngine.update(engine); // Updating the physics engine
 
   // Set gravity to 0 to keep balls within the table
@@ -72,7 +75,7 @@ function draw() {
   // Drawing the title of the game
   push();
   textSize(36);
-  fill("white");
+  fill(255);
   stroke(255);
   text("SNOOKER ASSIGNMENT", 450, 50);
   pop();
@@ -85,7 +88,7 @@ function draw() {
     // Instructions to select ball arrangement mode
     push();
     textSize(24);
-    fill("white");
+    fill(255);
     text(
       "Press for Ball Placement: 1 👉 ordered, 2 👉 unordered, 3 👉 partially ordered",
       200,
@@ -110,12 +113,12 @@ function draw() {
 
       push();
       textSize(24);
-      fill("white");
+      fill(255);
       text("press r to restart the game", 200, 600);
       pop();
 
       cueBall.draw(); // Drawing the cue ball
-      ballOrganizer.showTarget(); // Showing the target for the cue ball
+      ballOrganizer.showAim(); // Showing the aim for the cue ball
 
       // Handling game logic if the cue ball is in the field and not constrained
       if (cueBall.isInsideField() && !cueBall.ballConst) {

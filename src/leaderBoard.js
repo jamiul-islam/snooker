@@ -16,7 +16,7 @@ function LeaderBoard() {
   this.showScore = () => {
     push();
     textSize(24);
-    fill("white");
+    fill(255);
     stroke("white");
     text("Score: " + score, 1050, 400);
   };

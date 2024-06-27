@@ -17,12 +17,12 @@ function BallOrganizer() {
   let won = false;
   this.foulText = "";
   let subsequentColor = 0;
-  let target = "Red Ball";
+  let aim = "Red Ball";
   this.redInside = false;
   let ballImpacted;
   this.mode;
 
-  // Initialize the positions and values of colored balls
+  // Initialize the positions and values of colorful balls
   this.colorfulBalls = {
     pink: {
       x: 720,
@@ -144,7 +144,7 @@ function BallOrganizer() {
           createBall(random(249, 949), random(149, 399), "red", 1);
           snookerSleeping.set(this.allBalls["red"][i]["object"], false);
         }
-        // colored balls in fixed positions
+        // colorful balls in fixed positions
         for (var i = 0; i < Object.keys(this.colorfulBalls).length; i++) {
           let color = Object.keys(this.colorfulBalls)[i];
           createBall(
@@ -196,7 +196,7 @@ function BallOrganizer() {
           if (ball.color == "red") {
             this.redInside = true;
             removeBall(this.allBalls.red, this.allBalls.red.indexOf(ball));
-            target = "Colored Ball";
+            aim = "Colorful Ball";
           } else {
             removeBall(this.allBalls.color, this.allBalls.color.indexOf(ball));
             subsequentColor++;
@@ -212,7 +212,7 @@ function BallOrganizer() {
                 ball.value
               );
             } else {
-              target = "Red Ball";
+              aim = "Red Ball";
             }
             if (
               this.allBalls.red.length == 0 &&
@@ -251,7 +251,7 @@ function BallOrganizer() {
           } else {
             coloredBallsImpacted();
           }
-          target = "Red ball";
+          aim = "Red Ball";
         }
       }
     }
@@ -261,8 +261,8 @@ function BallOrganizer() {
   this.drawFoul = () => {
     push();
     textSize(24);
-    stroke(this.foul ? "red" : 0);
-    fill(this.foul ? "red" : 0);
+    stroke(this.foul ? "red" : 255);
+    fill(this.foul ? "red" : 255);
     text("Foul: " + this.foulText, 460, 690);
     pop();
   };
@@ -278,7 +278,7 @@ function BallOrganizer() {
     ballImpacted = "red";
   };
 
-  // Function to handle logic when a colored ball is hit
+  // Function to handle logic when a colorful ball is hit
   const coloredBallsImpacted = () => {
     if (!this.redInside && this.allBalls.red.length != 0 && !this.foul) {
       this.foul = true;
@@ -313,13 +313,13 @@ function BallOrganizer() {
     }
   };
 
-  // Function to show the target ball on the canvas
-  this.showTarget = () => {
+  // Function to show the aim ball on the canvas
+  this.showAim = () => {
     push();
     textSize(20);
     stroke(255);
-    fill("white");
-    text("Target: " + target, 949, 50);
+    fill(255);
+    text("Aim: " + aim, 949, 50);
     pop();
   };
 }

@@ -65,7 +65,7 @@ function ExtraFeature() {
         // Reset the points of all balls
         for (let type in ballOrganizer.allBalls) {
           for (let ball of ballOrganizer.allBalls[type]) {
-            // Skip colored balls that return after being pocketed
+            // Skip colorful balls that return after being pocketed
             if (
               ball.color == "red" ||
               ball.value != ballOrganizer.colorfulBalls[ball.color].value

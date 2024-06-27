@@ -121,7 +121,7 @@ function CueBall() {
   // Draws the cue ball and its constraint
   this.draw = () => {
     push();
-    fill("white");
+    fill(255);
     helperFunc.drawShapes(this.ball.vertices);
     stroke(0);
     strokeWeight(3);
