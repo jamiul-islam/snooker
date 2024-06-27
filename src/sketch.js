@@ -60,6 +60,7 @@ function setup() {
   gameTable.generateCushions(); // Creating the table cushions
   helperFunc.snookerMouseInteraction(); // Setting up mouse interaction
   imageBg = loadImage("/assets/patrick-tomasso-QMDap1TAu0g-unsplash.jpg"); // Loading the background image
+  console.log(noise(0.25));
 }
 
 // p5.js draw function, runs continuously

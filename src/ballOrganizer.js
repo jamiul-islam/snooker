@@ -120,7 +120,7 @@ function BallOrganizer() {
         }
         break;
 
-      // only red balls randomly positioned
+      // all balls randomly positioned
       case "unordered":
         for (let i = 0; i < 15; i++) {
           createBall(random(249, 949), random(149, 399), "red", 1);
@@ -138,13 +138,15 @@ function BallOrganizer() {
         }
         break;
 
-      // all balls randomly positioned
+      // only red balls randomly positioned
       case "partial":
         for (let i = 0; i < 15; i++) {
-          createBall(random(249, 949), random(149, 399), "red", 1);
+          let posX = map(noise(i * 0.1), 0, 1, 300, 900); // Adjusted range to stay within table bounds
+          let posY = map(noise(i * 0.1 + 1000), 0, 1, 150, 380); // Adjusted range to stay within table bounds
+          createBall(posX, posY, "red", 1);
           snookerSleeping.set(this.allBalls["red"][i]["object"], false);
         }
-        // colorful balls in fixed positions
+        // Colorful balls in fixed positions
         for (var i = 0; i < Object.keys(this.colorfulBalls).length; i++) {
           let color = Object.keys(this.colorfulBalls)[i];
           createBall(
@@ -154,6 +156,7 @@ function BallOrganizer() {
             this.colorfulBalls[color]["value"]
           );
         }
+        break;
     }
   };
 
