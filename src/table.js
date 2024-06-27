@@ -14,7 +14,7 @@ function Table() {
   // Constants defining table dimensions and cushion properties
   const widthOfTable = 800;
   const lengthOfTable = widthOfTable / 2;
-  const widthOfBox = (widthOfTable / 72) * 1.5;
+  const sizeOfHole = widthOfTable / 36;
   const heightOfCushion = 10;
   const angleOfCushion = 0.05;
 
@@ -25,7 +25,7 @@ function Table() {
       snookerBodies.trapezoid(
         402, // x position
         105, // y position
-        lengthOfTable - widthOfBox * 2 - 13, // top width
+        lengthOfTable - sizeOfHole * 2 - 13, // top width
         heightOfCushion, // height
         -0.07, // angle
         {
@@ -38,7 +38,7 @@ function Table() {
       snookerBodies.trapezoid(
         800,
         105,
-        lengthOfTable - widthOfBox * 2 - 10,
+        lengthOfTable - sizeOfHole * 2 - 10,
         heightOfCushion,
         -angleOfCushion,
         {
@@ -49,9 +49,9 @@ function Table() {
     );
     cushions.push(
       snookerBodies.trapezoid(
-        205,
+        widthOfTable - 595,
         300,
-        lengthOfTable - widthOfBox * 2 + 9,
+        lengthOfTable - sizeOfHole * 2 + 9,
         heightOfCushion,
         angleOfCushion,
         {
@@ -64,8 +64,8 @@ function Table() {
     cushions.push(
       snookerBodies.trapezoid(
         403,
-        495,
-        lengthOfTable - widthOfBox * 2 + 9,
+        lengthOfTable + 95,
+        lengthOfTable - sizeOfHole * 2 + 9,
         heightOfCushion,
         angleOfCushion,
         {
@@ -77,8 +77,8 @@ function Table() {
     cushions.push(
       snookerBodies.trapezoid(
         797,
-        495,
-        lengthOfTable - widthOfBox * 2 + 12,
+        lengthOfTable + 95,
+        lengthOfTable - sizeOfHole * 2 + 12,
         heightOfCushion,
         angleOfCushion,
         {
@@ -91,7 +91,7 @@ function Table() {
       snookerBodies.trapezoid(
         995,
         300,
-        lengthOfTable - widthOfBox * 2 - 12,
+        lengthOfTable - sizeOfHole * 2 - 12,
         heightOfCushion,
         -angleOfCushion,
         {
@@ -111,39 +111,39 @@ function Table() {
   // Function to draw the table's playing field
   const drawTableField = () => {
     noStroke();
-    fill("#4e8834"); // Green color
-    rect(200, 100, widthOfTable, lengthOfTable); // Draw rectangle representing the field
+    fill("#4b8232"); // Green color
+    rect(widthOfTable / 4, lengthOfTable - 300, widthOfTable, lengthOfTable); // Draw rectangle representing the field
   };
 
   // Function to draw the sides (rails) around the table
   const drawSides = () => {
-    fill("#40230d"); // Brown color for the rails
-    rect(185, 100, 15, lengthOfTable); // Left rail
-    rect(200, 85, widthOfTable, 15); // Top rail
-    rect(1000, 100, 15, lengthOfTable); // Right rail
-    rect(200, 500, widthOfTable, 15); // Bottom rail
+    fill("#41240f"); // Brown color for the rails
+    rect(widthOfTable - 615, lengthOfTable - 300, 15, lengthOfTable); // Left rail
+    rect(widthOfTable / 4, lengthOfTable - 315, widthOfTable, 15); // Top rail
+    rect(widthOfTable + 200, lengthOfTable - 300, 15, lengthOfTable); // Right rail
+    rect(widthOfTable / 4, lengthOfTable + 100, widthOfTable, 15); // Bottom rail
   };
 
   // Function to draw yellow marking boxes on the table
   const drawYellowBox = () => {
-    fill("#f1d74a"); // Yellow color
-    rect(185, 85, 25, 25, 15, 0, 0, 0); // Top left
-    rect(588, 85, 24, 15); // Top middle
-    rect(990, 85, 25, 25, 0, 15, 0, 0); // Top right
-    rect(185, 490, 25, 25, 0, 0, 0, 15); // Bottom left
-    rect(588, 500, 24, 15); // Bottom middle
-    rect(990, 490, 25, 25, 0, 0, 15, 0); // Bottom right
+    fill("#e2c640"); // Yellow color
+    rect(widthOfTable - 615, lengthOfTable - 315, Math.floor(sizeOfHole + 3), Math.floor(sizeOfHole + 3), 15, 0, 0, 0); // Top left
+    rect(widthOfTable - 212, lengthOfTable - 315, Math.floor(sizeOfHole + 3), 15); // Top middle
+    rect(widthOfTable + 190, lengthOfTable - 315, Math.floor(sizeOfHole + 3), Math.floor(sizeOfHole + 3), 0, 15, 0, 0); // Top right
+    rect(widthOfTable - 615, lengthOfTable + 90, Math.floor(sizeOfHole + 3), Math.floor(sizeOfHole + 3), 0, 0, 0, 15); // Bottom left
+    rect(widthOfTable - 212, lengthOfTable + 100, Math.floor(sizeOfHole + 3), 15); // Bottom middle
+    rect(widthOfTable + 190, lengthOfTable + 90, Math.floor(sizeOfHole + 3), Math.floor(sizeOfHole + 3), 0, 0, 15, 0); // Bottom right
   };
 
   // Function to draw holes on the table
   const drawTableHoles = () => {
     fill(0); // Black color
-    ellipse(205, 104, widthOfBox); // Top left
-    ellipse(600, 104, widthOfBox); // Top middle
-    ellipse(996, 104, widthOfBox); // Top right
-    ellipse(205, 495, widthOfBox); // Bottom left
-    ellipse(600, 495, widthOfBox); // Bottom middle
-    ellipse(996, 495, widthOfBox); // Bottom right
+    ellipse(widthOfTable - 595, lengthOfTable - 296, sizeOfHole); // Top left
+    ellipse(widthOfTable - 200, lengthOfTable - 296, sizeOfHole); // Top middle
+    ellipse(widthOfTable + 196, lengthOfTable - 296, sizeOfHole); // Top right
+    ellipse(widthOfTable - 595, lengthOfTable + 95, sizeOfHole); // Bottom left
+    ellipse(widthOfTable - 200, lengthOfTable + 95, sizeOfHole); // Bottom middle
+    ellipse(widthOfTable + 196, lengthOfTable + 95, sizeOfHole); // Bottom right
   };
 
   // Function to draw the "D" line on the table
@@ -151,10 +151,10 @@ function Table() {
     fill(255); // White color
     stroke(255); // White stroke
     line(
-      200 + widthOfTable / 5,
-      100 + 15,
-      200 + widthOfTable / 5,
-      lengthOfTable + 100 - 15
+      widthOfTable - 440,
+      lengthOfTable - 285,
+      widthOfTable - 440,
+      lengthOfTable + 85
     ); // Draw vertical line
     noFill();
     arc(200 + widthOfTable / 5, 175 + 370 / 3, 150, 150, 90, 270); // Draw semicircle arc
@@ -182,7 +182,7 @@ function Table() {
     for (let cushion of c) {
       push();
       noStroke();
-      fill(cushion.render.visible ? "#346219" : "#69F319"); // Dark or light green based on visibility
+      fill(cushion.render.visible ? "#326119" : "#18b255"); // Dark or light green based on visibility
       helperFunc.drawShapes(cushion.vertices); // Draw the cushion shape
       pop();
     }

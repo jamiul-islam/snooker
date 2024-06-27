@@ -82,12 +82,12 @@ function ExtraFeature() {
       activate: () => {
         // Predefined positions for aligning balls to pockets
         let positions = [
-          { x: 221, y: 119 },
-          { x: 601, y: 119 },
-          { x: 981, y: 119 },
-          { x: 221, y: 481 },
-          { x: 601, y: 481 },
-          { x: 981, y: 481 },
+          { x: width - 1060, y: height - 600 },
+          { x: width - 680, y: height - 600 },
+          { x: width - 300, y: height - 600 },
+          { x: width - 1060, y: height - 240 },
+          { x: width - 680, y: height - 240 },
+          { x: width - 300, y: height - 240 },
         ];
 
         // Counter to limit alignment to 6 balls

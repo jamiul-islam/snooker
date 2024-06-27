@@ -18,6 +18,6 @@ function LeaderBoard() {
     textSize(24);
     fill(255);
     stroke("white");
-    text("Score: " + score, 1050, 400);
+    text("Score: " + score, width - 230, height - 320);
   };
 }

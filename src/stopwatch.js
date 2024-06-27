@@ -34,11 +34,11 @@ function Stopwatch() {
         `Stopwatch: ${mins < 10 ? "0" + mins : mins}:${
           secs < 10 ? "0" + secs : secs
         }`,
-        1050,
-        200
+        width - 230,
+        height - 520
       );
     } else {
-      text("GAME'S OVER", 1050, 200);
+      text("GAME'S OVER", width - 250, height - 500);
     }
 
     pop();

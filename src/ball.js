@@ -8,7 +8,7 @@
 
 function Ball(x, y, color, value) {
   return {
-    object: snookerBodies.circle(x, y, 400 / 72, {
+    object: snookerBodies.circle(x, y, 200 / 36, {
       isSleeping: true,
       collisionFilter: { category: 0x0002 }, // disable mouse interaction with red balls
       restitution: 0.4,

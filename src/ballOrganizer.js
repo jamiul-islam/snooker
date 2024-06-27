@@ -12,6 +12,22 @@ function BallOrganizer() {
     color: [],
   };
 
+  // Define the array of dimensions with calculated results
+  const DIMENSIONS = [
+    720, //               (x of pink)
+    310 - 800 / 72, //    (y of pink)
+    600, //               (x of blue)
+    310 - 800 / 72, //    (y of blue)
+    950, //               (x of black)
+    310 - 800 / 72, //    (y of black)
+    360, //               (x of brown)
+    310 - 800 / 72, //    (y of brown)
+    360, //               (x of green)
+    150 + 370 / 5, //     (y of green)
+    360, //               (x of yellow)
+    250 + 370 / 3, //     (y of yellow)
+  ];
+
   // Initialize foul state and other game-related variables
   this.foul = false;
   let won = false;
@@ -25,33 +41,33 @@ function BallOrganizer() {
   // Initialize the positions and values of colorful balls
   this.colorfulBalls = {
     pink: {
-      x: 720,
-      y: 310 - 800 / 72,
+      x: DIMENSIONS[0],
+      y: DIMENSIONS[1],
       value: 6,
     },
     blue: {
-      x: 600,
-      y: 310 - 800 / 72,
+      x: DIMENSIONS[2],
+      y: DIMENSIONS[3],
       value: 5,
     },
     black: {
-      x: 949,
-      y: 310 - 800 / 72,
+      x: DIMENSIONS[4],
+      y: DIMENSIONS[5],
       value: 7,
     },
     brown: {
-      x: 360,
-      y: 310 - 800 / 72,
+      x: DIMENSIONS[6],
+      y: DIMENSIONS[7],
       value: 4,
     },
     green: {
-      x: 360,
-      y: 149 + 370 / 5,
+      x: DIMENSIONS[8],
+      y: DIMENSIONS[9],
       value: 2,
     },
     yellow: {
-      x: 360,
-      y: 249 + 370 / 3,
+      x: DIMENSIONS[10],
+      y: DIMENSIONS[11],
       value: 3,
     },
   };
@@ -266,7 +282,7 @@ function BallOrganizer() {
     textSize(24);
     stroke(this.foul ? "red" : 255);
     fill(this.foul ? "red" : 255);
-    text("Foul: " + this.foulText, 460, 690);
+    text("Foul: " + this.foulText, width - 820, height - 30);
     pop();
   };
 
@@ -308,7 +324,7 @@ function BallOrganizer() {
       textSize(40);
       stroke(won ? "green" : 0);
       fill(won ? "green" : 0);
-      text("You Win!", 400, 700);
+      text("You Win!", width - 880, height - 20);
       pop();
       setTimeout(() => {
         noLoop();
@@ -322,7 +338,7 @@ function BallOrganizer() {
     textSize(20);
     stroke(255);
     fill(255);
-    text("Aim: " + aim, 949, 50);
+    text("Aim: " + aim, width - 330, height - 670);
     pop();
   };
 }

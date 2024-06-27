@@ -60,7 +60,6 @@ function setup() {
   gameTable.generateCushions(); // Creating the table cushions
   helperFunc.snookerMouseInteraction(); // Setting up mouse interaction
   imageBg = loadImage("/assets/patrick-tomasso-QMDap1TAu0g-unsplash.jpg"); // Loading the background image
-  console.log(noise(0.25));
 }
 
 // p5.js draw function, runs continuously
@@ -78,7 +77,7 @@ function draw() {
   textSize(36);
   fill(255);
   stroke(255);
-  text("SNOOKER ASSIGNMENT", 450, 50);
+  text("SNOOKER ASSIGNMENT", width / 3, height / 15);
   pop();
 
   // Drawing the stopwatch timer
@@ -92,14 +91,14 @@ function draw() {
     fill(255);
     text(
       "Press for Ball Placement: 1 👉 ordered, 2 👉 unordered, 3 👉 partially ordered",
-      200,
-      600
+      width / 6.5,
+      height - 120
     );
     pop();
   } else {
     // Displaying the selected mode and starting the game if mode is selected
     textSize(14);
-    text("mode: " + ballOrganizer.mode, 25, 100);
+    text("mode: " + ballOrganizer.mode, width / 50, height / 7);
     ballOrganizer.drawBalls(); // Drawing the balls on the table
     leaderBoard.showScore(); // Displaying the leaderboard
 
@@ -107,7 +106,11 @@ function draw() {
       // Instructions to place the white ball if game hasn't started
       textSize(24);
       stroke(255);
-      text("Please click inside the D line to place the white ball", 200, 600);
+      text(
+        "Please click inside the D line to place the white ball",
+        width / 4,
+        height - 120
+      );
     } else {
       // Game has started, showing additional instructions
       stopwatch.startCounting(); // Starting the stopwatch
@@ -115,7 +118,7 @@ function draw() {
       push();
       textSize(24);
       fill(255);
-      text("press r to restart the game", 200, 600);
+      text("press r to restart the game", width / 3, height - 120);
       pop();
 
       cueBall.draw(); // Drawing the cue ball
