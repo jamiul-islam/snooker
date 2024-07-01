@@ -211,7 +211,7 @@ function BallOrganizer() {
   this.detectFalling = () => {
     for (ballType in this.allBalls) {
       for (ball of this.allBalls[ballType]) {
-        if (ball.object.position.y <= 106 || ball.object.position.y >= 494) {
+        if (ball.object.position.y <= 115 || ball.object.position.y >= 485) {
           if (ball.color == "red") {
             this.redInside = true;
             removeBall(this.allBalls.red, this.allBalls.red.indexOf(ball));
