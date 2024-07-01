@@ -1,25 +1,65 @@
-/**
- * ------------------------COMMENTARY------------------------
- * My snooker application is designed with a unique blend of professional gameplay mechanics and arcade-style features.
- * The game table is visually rendered using p5.js, while the physical interactions of the balls and cushions are handled by Matter.js, ensuring realistic physics.
+/*
+ * --------Game Initialization--------
  *
- * The cue ball movement utilizes a slingshot-style mechanism, enhancing the user experience.
- * This is achieved by creating and removing constraints on the cue ball based on mouse interactions, allowing for intuitive control.
+ * The game begins when the user presses one of three numeric choices on the keyboard: 1, 2, or 3,
+ * each corresponding to a different ball arrangement:
  *
- * Object-oriented programming, factory pattern principles are applied throughout the codebase, with constructor functions and classes managing various aspects of the game.
- * The Ball constructor function creates individual ball objects with specific properties, while the BallOrganizer constructor function manages the arrangement and organization of balls on the table.
+ *   - Ordered (1): The balls are arranged in a pyramid configuration.
+ *   - Partial (2): Only the red balls are randomly scattered across the table.
+ *   - Unordered (3): All balls are randomly distributed across the table.
  *
- * The CueBall constructor function is responsible for the creation and management of the cue ball, including setting constraints for movement and handling interactions.
- * The ExtraFeature constructor function introduces additional gameplay elements, such as increasing the cue ball's mass, shrinking ball sizes, and tripling the points of each ball, adding an arcade-like twist to the game.
+ * For random ball distribution, the application utilizes the random function for the unordered mode and the noise function for the partial mode.
+ * The game starts only when the player positions the cue ball inside the D-line.
  *
- * The Table constructor function encapsulates the snooker table's components, including the generation and detection of impacts between the cue ball and cushions.
- * The helper functions manage various utility tasks, such as drawing shapes and handling mouse interactions.
+ * --------Ball Properties and Organization--------
  *
- * A scoreboard system tracks the player's score, accounting for both successful shots and fouls.
- * A stopwatch adds a time-based challenge, counting down from 10 minutes and allowing players to restart the game upon completion or timeout.
+ * Each ball in the simulation is endowed with appropriate restitution and friction properties to emulate realistic bouncing and slowing effects.
+ * Balls are managed within an array, allowing dynamic interaction and removal. The ballOrganizer.js class includes the detectImpact() function,
+ * which evaluates collisions between the cue ball and other balls on the table.
  *
- * Overall, my snooker application offers a unique and engaging experience by combining realistic physics and professional gameplay with creative, arcade-inspired features.
- * The result is a dynamic and entertaining game that stands out from traditional snooker simulations.
+ * --------Cue Stick Mechanics--------
+ *
+ * The cue stick in the simulation is modeled as an elastic band with dynamic constraints. When the cue ball is struck,
+ * it moves in various directions based on the applied force. The physics engine ensures that excessive force can propel the cue ball off the table.
+ * Error-checking mechanisms are in place to prompt the user to reposition the cue ball within the D-line if it exits the table or falls into one of the six pockets.
+ *
+ * --------Cushion Physics and Visual Features--------
+ *
+ * Physics on the table cushions is implemented by assigning appropriate restitution values to simulate bounciness.
+ * Additionally, a unique feature was added where the cue ball changes color from dark green to light green upon hitting the cushion,
+ * providing a visual indication of collision. This feature, although was primarily for testing, remains in the final version due to its appealing aesthetics.
+ *
+ * --------Extra Features--------
+ *
+ * I developed extra functionalities and implemented four unique features using button interactions that challenged and required me to extensively depend on the Matter.js documentation throughout the past weeks:
+ *
+ *   - Jumbo Ball: Increases the weight of the cue ball by five times upon clicking the button.
+ *   - Shrink Size: Reduces the size of all balls, excluding the cue ball, to approximately 60% of their original size.
+ *   - 3X Score: Triples the player's score.
+ *   - To Pockets: Randomly arranges six red balls at the six pockets of the table iteratively when the button is clicked.
+ *
+ * --------FACTORY PATTERN AND OOP FEATURES--------
+ *
+ * In this project I've used OOP features like encapsulation, inheritance, and polymorphism were applied extensively.
+ * Encapsulation helped protect the internal state of objects, exposing only what was necessary.
+ * Inheritance allowed for a hierarchy of classes, so shared behaviors among different ball types were efficiently managed.
+ * Polymorphism enabled dynamic method overriding, allowing each ball type to behave uniquely when needed.
+ *
+ * References:
+ * [1] https://www.geeksforgeeks.org/javascript-program-to-print-pyramid-pattern-by-using-numbers
+ *   - Learned how to draw pyramid shapes, then modified the code to draw triangular shape of ball arrangement at keyboard press 1
+ *
+ * [2] https://natureofcode.com/physics-libraries/#matterjs-constraints
+ *   - Took the constraints snippet of code from these resources and modified it in my application as needed.
+ *
+ * [3] https://editor.p5js.org/pedbad/sketches/0p6fA4hKe
+ *   - Took the noise function code snippet from this resource to draw partially ordered balls in the keyboard’s numeric keystroke 2
+ *
+ * [4] https://unsplash.com/photos/gray-concrete-bricks-painted-in-blue-QMDap1TAu0g
+ *   - Used this licence-free photo as a background for my snooker application
+ *
+ * [5] https://www.soundsnap.com/tags/billiards
+ *   - Used this website for licence-free 3 license-free sounds for collision
  */
 
 // Importing Matter.js engine modules for physics simulation
