@@ -167,6 +167,7 @@ function Table() {
   this.detectImpact = (cueBall) => {
     for (let cushion of cushions) {
       if (snookerCollision.collides(cueBall, cushion)) {
+        cusionHit.play(); // Play sound on collision
         cushion.render.visible = false; // Hide cushion on collision
       } else {
         cushion.render.visible = true; // Show cushion otherwise

@@ -133,7 +133,6 @@ function ExtraFeature() {
     }
     // Set up the button's click event listener
     button.mousePressed(function () {
-      console.log(item.title);
       item.activate();
       item.activated = true;
       button.attribute("disabled", true);

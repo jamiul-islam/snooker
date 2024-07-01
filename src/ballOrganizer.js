@@ -241,6 +241,7 @@ function BallOrganizer() {
             }
             this.redInside = false;
           }
+          ballFell.play();
           leaderBoard.addScore(this.foul ? 0 : ball.value);
         }
       }
@@ -270,6 +271,7 @@ function BallOrganizer() {
           } else {
             coloredBallsImpacted();
           }
+          ballWasHit.play();
           aim = "Red Ball";
         }
       }

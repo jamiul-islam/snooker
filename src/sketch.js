@@ -51,6 +51,23 @@ var feature = new ExtraFeature();
 var helperFunc = new Helper();
 
 var imageBg; // Variable to store the background image
+var ballWasHit; // Variable to store the sound of the ball being hit
+var ballFell; // Variable to store the sound of the ball falling into a pocket
+var cusionHit; // Variable to store the sound of the ball hitting a cushion
+
+// function to preload the sound
+function preload() {
+  soundFormats("mp3", "ogg");
+  ballWasHit = loadSound(
+    "/assets/383944-Billiards-Pool-Sports-sport-shot-ball-pocket-fall-14 (mp3cut.net).wav"
+  );
+  ballFell = loadSound(
+    "/assets/69327-Pool_ricochet_ball_in_pocket_empty_billiards-BLASTWAVEFX-08258 (mp3cut.net).wav"
+  );
+  cusionHit = loadSound(
+    "/assets/383892-Billiards-Pool-Sports-sport-drop-ball-on-table-05 (mp3cut.net).wav"
+  );
+}
 
 // p5.js setup function, runs once at the start
 function setup() {
