@@ -77,6 +77,7 @@ function BallOrganizer() {
    * @param {*} mode: mode of ball arrangement
    */
   this.setMode = (mode) => {
+    console.log(mode);
     this.mode = mode;
     createBalls(mode);
   };
@@ -241,6 +242,7 @@ function BallOrganizer() {
             }
             this.redInside = false;
           }
+          console.log("Ball fell");
           ballFell.play();
           leaderBoard.addScore(this.foul ? 0 : ball.value);
         }
@@ -268,8 +270,10 @@ function BallOrganizer() {
         if (snookerCollision.collides(cueBall, ball.object)) {
           if (ball.color == "red") {
             redBallImpacted();
+            console.log("red ball impacted");
           } else {
             coloredBallsImpacted();
+            console.log("colorful ball impacted");
           }
           ballWasHit.play();
           aim = "Red Ball";

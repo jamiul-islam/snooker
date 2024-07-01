@@ -34,6 +34,7 @@ function CueBall() {
     snookerBody.setMass(this.ball, (this.ball.mass *= 2));
     // Add the cue ball to the snooker world
     snookerWorld.add(engine.world, [this.ball]);
+    console.log("cueball plotted at ", "x: ", x, "y: ", y);
   };
 
   /**

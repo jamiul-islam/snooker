@@ -137,6 +137,7 @@ function ExtraFeature() {
       item.activated = true;
       button.attribute("disabled", true);
       featuresUsed.push(item);
+      console.log("Activated feature: " + item.title);
     });
   };
 
